@@ -1,0 +1,46 @@
+{
+  "server": {
+    "Zwischenzeug": [
+      {
+        "name": "DasEvoliBot",
+        "id": "549831896759140353",
+        "kills": 0,
+        "wins": 0,
+        "loses": 0,
+        "games": 2,
+        "points": 0,
+        "seasongames": 2
+      },
+      {
+        "name": "Birb",
+        "id": "271186557396975626",
+        "kills": 0,
+        "wins": 0,
+        "loses": 0,
+        "games": 2,
+        "points": 0,
+        "seasongames": 2
+      },
+      {
+        "name": "AvaIre",
+        "id": "275270122082533378",
+        "kills": 0,
+        "wins": 0,
+        "loses": 0,
+        "games": 2,
+        "points": 0,
+        "seasongames": 2
+      },
+      {
+        "name": "DasEvoli",
+        "id": "153379369060925440",
+        "kills": 0,
+        "wins": 0,
+        "loses": 0,
+        "games": 2,
+        "points": 0,
+        "seasongames": 2
+      }
+    ]
+  }
+}

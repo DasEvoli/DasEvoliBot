@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0175d109-4cf0-4693-902d-7da0f69daef5}</ProjectGuid>
+    <ProjectHome />
+    <StartupFile>dasevolibot.py</StartupFile>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <ProjectTypeGuids>{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <InterpreterId />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup>
+    <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="dasevolibot.py" />
+    <Compile Include="games\fight\attack_strings.py" />
+    <Compile Include="games\fight\event.py" />
+    <Compile Include="games\fight\function_collection.py" />
+    <Compile Include="games\fight\jsoncontroller.py" />
+    <Compile Include="games\fight\main.py" />
+    <Compile Include="games\fight\shop.py" />
+    <Compile Include="games\fight\special.py" />
+    <Compile Include="games\fight\__init__.py" />
+    <Compile Include="utils.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="resources\event\caustic.JPG" />
+    <Content Include="resources\event\fiyora.jpg" />
+    <Content Include="resources\event\gamescom.jpg" />
+    <Content Include="resources\event\gekucringe.jpg" />
+    <Content Include="resources\event\hacker.jpg" />
+    <Content Include="resources\event\hanzo.gif" />
+    <Content Include="resources\event\käsekuchen.jpg" />
+    <Content Include="resources\event\käsekuchenheal.jpg" />
+    <Content Include="resources\event\obiwan.jpg" />
+    <Content Include="resources\event\sneaky.JPG" />
+    <Content Include="resources\event\vodafone.jpg" />
+    <Content Include="resources\event\wurstsalat.jpg" />
+    <Content Include="resources\random\ace.JPG" />
+    <Content Include="resources\random\ahri.jpg" />
+    <Content Include="resources\random\karpfen.jpg" />
+    <Content Include="resources\random\käsekuchen.jpg" />
+    <Content Include="resources\random\lego.jpg" />
+    <Content Include="resources\special\absturz.jpg" />
+    <Content Include="resources\special\artikel13.jpg" />
+    <Content Include="resources\special\artillerie.jpg" />
+    <Content Include="resources\special\bamboozled.jpg" />
+    <Content Include="resources\special\camper.jpg" />
+    <Content Include="resources\special\fluffy.gif" />
+    <Content Include="resources\special\gibraltar.jpg" />
+    <Content Include="resources\special\highnoon.gif" />
+    <Content Include="resources\special\lego_derp.jpg" />
+    <Content Include="resources\special\teen.jpg" />
+    <Content Include="resources\special\void.jpg" />
+    <Content Include="resources\special\waifuhunt.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="games\" />
+    <Folder Include="games\fight" />
+    <Folder Include="resources\" />
+    <Folder Include="resources\event" />
+    <Folder Include="resources\random" />
+    <Folder Include="resources\special" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
