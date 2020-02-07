@@ -4,7 +4,7 @@
 # Lose = -1 point
 # Kill = 1 point
 # Seasongames is a feature that is not added yet
-# TODO Json file needs at least this '"server": {}' to work. We should automate it
+# TODO Json file needs at least this '"{server": {}}' to work. We should automate it
 
 import json
 import utils

@@ -8,6 +8,7 @@ __pycache__/
 .vs/
 settings.py
 *.sln
+*.pyproj
 
 # C extensions
 *.so

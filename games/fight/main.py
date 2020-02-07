@@ -12,7 +12,7 @@ import games.fight.function_collection
 # Easy to adjust values
 # Chances are always in %
 basishp = 100
-eventchance = 4
+eventchance = 4 
 specialchance = 15
 shopchance = 10
 
