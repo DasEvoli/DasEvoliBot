@@ -19,6 +19,9 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="alert\twitch.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="dasevolibot.py" />
     <Compile Include="games\fight\attack_strings.py" />
     <Compile Include="games\fight\event.py" />
@@ -64,6 +67,7 @@
   <ItemGroup>
     <Folder Include="games\" />
     <Folder Include="games\fight" />
+    <Folder Include="alert\" />
     <Folder Include="resources\" />
     <Folder Include="resources\event" />
     <Folder Include="resources\random" />

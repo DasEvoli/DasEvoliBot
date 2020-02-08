@@ -1,0 +1,16 @@
+{
+  "server": {
+    "Zwischenzeug": [
+      {
+        "channel": "dasevoli",
+        "last_alert": 1581120338,
+        "discord_channel_id": 549811728108486657
+      },
+      {
+        "channel": "terrapoyt",
+        "last_alert": 1581123592,
+        "discord_channel_id": 549815022151270400
+      }
+    ]
+  }
+}

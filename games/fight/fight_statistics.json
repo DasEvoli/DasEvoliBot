@@ -20,58 +20,6 @@
         "games": 3,
         "points": -1,
         "seasongames": 3
-      },
-      {
-        "name": "AvaIre",
-        "id": "275270122082533378",
-        "kills": 0,
-        "wins": 0,
-        "loses": 1,
-        "games": 3,
-        "points": -1,
-        "seasongames": 3
-      },
-      {
-        "name": "DasEvoli",
-        "id": "153379369060925440",
-        "kills": 0,
-        "wins": 0,
-        "loses": 1,
-        "games": 3,
-        "points": -1,
-        "seasongames": 3
-      }
-    ],
-    "Tiny Triss": [
-      {
-        "name": "Tiny Triss",
-        "id": "230048661193752576",
-        "kills": 1,
-        "wins": 0,
-        "loses": 2,
-        "games": 3,
-        "points": -1,
-        "seasongames": 3
-      },
-      {
-        "name": "DasEvoli",
-        "id": "153379369060925440",
-        "kills": 4,
-        "wins": 5,
-        "loses": 1,
-        "games": 7,
-        "points": 8,
-        "seasongames": 7
-      },
-      {
-        "name": "Hugo5551",
-        "id": "165882342752124928",
-        "kills": 2,
-        "wins": 1,
-        "loses": 5,
-        "games": 6,
-        "points": -2,
-        "seasongames": 6
       }
     ]
   }
