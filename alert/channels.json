@@ -1,15 +1,62 @@
 {
   "server": {
+    "Tiny Triss": [
+      {
+        "channel": "tinytriss",
+        "last_alert": 1587211263,
+        "discord_channel_id": 282196717527498752
+      }
+    ],
     "Zwischenzeug": [
       {
         "channel": "dasevoli",
-        "last_alert": 1581120338,
-        "discord_channel_id": 549811728108486657
+        "last_alert": 1586313015,
+        "discord_channel_id": 675670106377814027
       },
       {
         "channel": "terrapoyt",
-        "last_alert": 1581123592,
-        "discord_channel_id": 549815022151270400
+        "last_alert": 1586710762,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "burritoofdoom",
+        "last_alert": 1586797580,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "jacky_libra",
+        "last_alert": 1586201481,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "kingkc",
+        "last_alert": 1586391073,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "abney317",
+        "last_alert": 1586655848,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "arbliterator",
+        "last_alert": 1586657285,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "monos",
+        "last_alert": 1586535370,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "tinytriss",
+        "last_alert": 1587211266,
+        "discord_channel_id": 675670106377814027
+      },
+      {
+        "channel": "Simply",
+        "last_alert": 1586810996,
+        "discord_channel_id": 675670106377814027
       }
     ]
   }

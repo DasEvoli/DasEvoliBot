@@ -104,7 +104,7 @@ async def add_twitch_alert(ctx, twitch_channel=""):
     if not alert.twitch.json_handler.check_if_twitch_channel_exists(ctx.guild.name, twitch_channel):
         alert.twitch.json_handler.add_twitch_channel(ctx.guild.name, twitch_channel, ctx.channel.id)
     if alert.twitch.json_handler.check_if_twitch_channel_exists(ctx.guild.name, twitch_channel):
-        await ctx.send("**{}** was added succesfully to the Twitch alert list. As soon as this Twitch channel goes online this discord channel gets an notifaction.".format(twitch_channel))
+        await ctx.send("**{}** was added succesfully to the Twitch alert list. As soon as this Twitch channel goes online this discord channel gets a notifaction.".format(twitch_channel))
     else: await ctx.send("Error happend. Could not add **{}** to the alert list.".format(twitch_channel))     
             
      

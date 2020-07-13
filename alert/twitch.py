@@ -99,7 +99,7 @@ class main:
         while True:
 
             # How often it should fire
-            await asyncio.sleep(10)
+            await asyncio.sleep(300)
 
             # We get the currently saved alerts
             with open('alert/channels.json', 'r') as f:
@@ -142,4 +142,4 @@ class main:
         for guild in utils.bot.guilds:
             for channel in guild.channels:
                 if channel.id == channel_id:
-                    await channel.send("https://www.twitch.tv/{} JUST WENT ONLINE!".format(twitch_channel))
+                    await channel.send("@everyone https://www.twitch.tv/{} JUST WENT ONLINE!".format(twitch_channel))
