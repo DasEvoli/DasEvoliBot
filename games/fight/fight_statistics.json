@@ -6,10 +6,10 @@
         "id": "549831896759140353",
         "kills": 0,
         "wins": 0,
-        "loses": 1,
-        "games": 3,
-        "points": -1,
-        "seasongames": 3
+        "loses": 2,
+        "games": 5,
+        "points": -2,
+        "seasongames": 5
       },
       {
         "name": "Birb",
@@ -20,6 +20,26 @@
         "games": 3,
         "points": -1,
         "seasongames": 3
+      },
+      {
+        "name": "AvaIre",
+        "id": "275270122082533378",
+        "kills": 1,
+        "wins": 2,
+        "loses": 1,
+        "games": 9,
+        "points": 2,
+        "seasongames": 9
+      },
+      {
+        "name": "DasEvoli",
+        "id": "153379369060925440",
+        "kills": 2,
+        "wins": 1,
+        "loses": 2,
+        "games": 10,
+        "points": 1,
+        "seasongames": 10
       }
     ]
   }

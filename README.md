@@ -6,26 +6,30 @@ If you want to join this bot to your server follow this link: https://discordapp
 Permissions probably need some adjustments. 
 
 ## Requirements
-* Python 3.7
-* [discord.py](https://github.com/Rapptz/discord.py)
-* Discordserver to test
+* Python 3.5.3 or higher
+
+## Setup
+* pip install discord
+* pip install requests
+* Fill data in settings.py
 
 ## Adding settings.py
 You need to add a settings.py file in your main dictionary to add your own token.
-Insert: Token: "yourtoken"
+Insert: Token: "test123token"
 
-## Example images
-### Attacks
+## Bot in action
+### Fight Module
+#### Attacks
 ![](https://i.imgur.com/4uwINSw.png)
-### Specials
+#### Specials
 ![](https://i.imgur.com/3xwYq90.png)
-### Events
+#### Events
 ![](https://i.imgur.com/HaBO4Kv.png)
-### Statistics
+#### Statistics
 ![](https://i.imgur.com/ZYi8KBw.png)
 
 ## Authors
-* DasEvoli (Vinzenz Wetzel)
+* Sleepyfox (Vinzenz Wetzel)
 
 ## License
 This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 (GPL3)

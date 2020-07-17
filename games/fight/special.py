@@ -4,9 +4,9 @@
 
 import asyncio
 import random
-import utils
-import discord
+import settings
 import games.fight.function_collection as function_collection
+import discord
 
 # Important to make those variables global so we can use lambda functions in a list
 alive_players_global = []
@@ -43,95 +43,72 @@ async def start_special(ctx, attacker, defender, alive_players, all_players):
 
 listSpecials = [
     [
-        "**{attacker}** nutzt Knuddelpower und drückt **{defender}** fast schon die letzte Luft aus der Lunge! Das sind ***{value} Schaden*** an **{defender}**!",
+        "**{attacker}** uses cuddling and squeezes **{defender}** all her/his air out! ***{value} damage*** to **{defender}**!",
         lambda: function_collection.change_player_hp(current_ctx_global, defender_global, -30),
         30,
         1,
-        utils.dict_special + "fluffy.gif"
+        settings.dict_special + "fluffy.gif"
     ],
     [
-        "Wo ist **{attacker}**?  Oh nein! Der stündliche Waifu-Hunt hat begonnen. Kurzerhand verlässt **{attacker}** den Fight. Stun für ***{value} Runden*** "
-        "an **{attacker}**, um neue Waifus zu claimen!",
-        lambda: function_collection.change_player_stun(current_ctx_global, attacker_global, 4),
-        4,
-        0,
-        utils.dict_special + "waifuhunt.jpg"
-    ],
-    [
-        "**{attacker}** hat Lego vertraut und für heute ein gemeinsames Spiel ausgemacht. Lego ließ ihn überraschenderweise wieder mal Links liegen. ***Stun für "
-        "{value} Runden*** an **{attacker}**!",
-        lambda: function_collection.change_player_stun(current_ctx_global, attacker_global, 4),
-        4,
-        0,
-        utils.dict_special + "lego_derp.jpg"
-    ],
-    [
-        "**{attacker}** muss sich erholen und platziert etwas auf den Boden. Eine große Kuppel breitet sich um ihn aus. ***{attacker}*** ist "
-        "***Immun*** für ***{value} Runden!***",
+        "**{attacker}** has to rest and places something on the ground. A big dome surrounds him. ***{attacker}*** is "
+        "***immune*** for ***{value} rounds!***",
         lambda: function_collection.change_player_immune(current_ctx_global, attacker_global, 4),
         4,
         0,
-        utils.dict_special + "gibraltar.jpg"
+        settings.dict_special + "gibraltar.jpg"
     ],
     [
-        "**{attacker}** sieht, dass alle Spieler zusammenstehen. Panisch sucht er die Y auf der Tastatur. Ein Artillerieangriff! ***{value} Schaden***"
-        " an **ALLE außer {attacker}**!",
+        "**{attacker}** sees, that all players stand together. An artillery attack! ***{value} damage***"
+        " to **EVERYONE except {attacker}**!",
         lambda: function_collection.change_players_hp(current_ctx_global, alive_players_global, -15, -1, exception=attacker_global),
         15,
         -1,
-        utils.dict_special + "artillerie.jpg"
+        settings.dict_special + "artillerie.jpg"
     ],
     [
-        "**{attacker}** ballt die Faust und schlägt einen Tunnel. Versteckt im Void kann niemand ihn treffen. ***Immun für {value} Runden!***",
+        "**{attacker}** punshes a tunnel. Hiding in the void no one can hit him. ***immune for {value} rounds!***",
         lambda: function_collection.change_player_immune(current_ctx_global, attacker_global, 3),
         3,
         0,
-        utils.dict_special + "void.jpg"
+        settings.dict_special + "void.jpg"
     ],
     [
-        "**{attacker}**: Bambazoo...Bamba... Bambamala.. fool em! **{attacker}** schickt einen Klon vor und lenkt seinen Gegner ab."
-        "Immun für ***{value}*** Runden!",
+        "**{attacker}**: Bambazoo...Bamba... Bambamala.. fool em! **{attacker}** sends a clone and fools his enemies."
+        "immune fpr ***{value}*** rounds!",
         lambda: function_collection.change_player_immune(current_ctx_global, attacker_global, 3),
         3,
         0,
-        utils.dict_special + "bamboozled.jpg"
+        settings.dict_special + "bamboozled.jpg"
     ],
     [
-        "**{attacker}** verschanzt sich in eine Ecke und wartet auf **{defender}**. Es vergingen Jahre, bis er aufgibt. Das hinterlässt Spuren. "
-        "***{value} Schaden*** an **{attacker}**!",
+        "**{attacker}** hides in a corner and waits for **{defender}**. Years passed. "
+        "***{value} damage*** to **{attacker}**!",
         lambda: function_collection.change_player_hp(current_ctx_global, attacker_global, -20),
         20,
         0,
-        utils.dict_special + "camper.jpg"
+        settings.dict_special + "camper.jpg"
     ],
     [
-        "**{attacker}** fühlt sich schon erwachsen, ist aber erst 17. Das ist nicht fair. Stun für ***{value} Runden***!",
+        "**{attacker}** feels like an adult, but is only 17 years old. Stun for ***{value} rounds***!",
         lambda: function_collection.change_player_stun(current_ctx_global, attacker_global, 4),
         4,
         0,
-        utils.dict_special + "teen.jpg"
+        settings.dict_special + "teen.jpg"
     ],
     [
-        "**{attacker}** holt sich Ace zur Hilfe. Ace berührt **{defender}** und lässt ihn abstürzen! ***{value} Schaden*** an **{defender}**",
-        lambda: function_collection.change_player_hp(current_ctx_global, defender_global, -20),
-        20,
-        1,
-        utils.dict_special + "absturz.jpg"
-    ],
-    [
-        "**{attacker}** verlangsamt sich bedrohend. IT'S HIGH NOON............DRAW! ***{value} Schaden*** an **ALLE außer {attacker}**",
+        "**{attacker}** walks slowly. IT'S HIGH NOON............DRAW! ***{value} damage*** to **EVERYONE except {attacker}**",
         lambda: function_collection.change_players_hp(current_ctx_global, alive_players_global, -15, -1, exception=attacker_global),
         15,
         -1,
-        utils.dict_special + "highnoon.gif"
+        settings.dict_special + "highnoon.gif"
     ],
     [
-        "**{attacker}** hat genug und zückt einen Brief aus der Tasche. EINE ANKLAGE FÜR EINE URHEBERRECHTSVERLETZUNG! **{defender}** "
-        "hat noch nie etwas von Artikel 13 gehört und muss die Katzenbilder offline nehmen und {value} Jahre ins Gefängnis! ***Stun*** "
-        "für ***{value} Runden***!",
+        "**{attacker}** has enough and takes out a letter. AN ACCUSATION FOR COPYRIGHT! **{defender}** "
+        "never heard about article 13 and gets {value} years into prison! ***stun*** "
+        "for ***{value} rounds***!",
         lambda: function_collection.change_player_stun(current_ctx_global, defender_global, 4),
         4,
         1,
-        utils.dict_special + "artikel13.jpg"
+        settings.dict_special + "article13.jpg"
     ]
 ]

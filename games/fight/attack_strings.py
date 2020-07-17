@@ -1,25 +1,24 @@
 # Here you can add any kind of string to show when a player attacks another player
 # They are seperated in no crit and crit
-# They get randomly choosed and every one has the same chance
+# They get randomly chose and every one has the same chance
 # It's important to use the syntax I used
 
 listAttackNoCrit = [
-    "**{attacker}** schubst **{defender}** leicht und macht ***{value} Schaden***!",
-    "**{attacker}** niest **{defender}** ins Gesicht. {defender} ist geimpft und kriegt nur ***{value} Schaden***!",
-    "**{attacker}** zieht die Hose aus und pupst **{defender}** ins Gesicht. **{defender}** scheint es zu mögen und kriegt nur ***{value} Schaden***!",
-    "**{attacker}** postet seine Wishlist von Twitch. **{defender}** scheint verstört und bekommt ***{value} Schaden***!",
-    "**{attacker}** wringt ein nasses Handtuch aus und peitscht **{defender}** aus. ***{value} Schaden***!",
-    "**{attacker}** bindet **{defender}** nicht richtig die Schuhe zu. **{defender}** fällt und bekommt ***{value} Schaden***!",
-    "**{attacker}** klaut **{defender}** eine Waifu. Das tut im Herzen weh... **{defender}** kriegt ***{value} Schaden***!"
+    "**{attacker}** pushes **{defender}** lightly and does ***{value} damage***!",
+    "**{attacker}** sneezes in **{defender}'s** face. {defender} is vaccinated and only gets ***{value} damage***!",
+    "**{attacker}** posts her/his wishlist. **{defender}** seems to be disgusted and gets ***{value} damage***!",
+    "**{attacker}** wrings out a wet towel and whips **{defender}**. ***{value} damage***!",
+    "**{attacker}** ties **{defender}'s** shoes but not well. **{defender}** falls and gets ***{value} damage***!",
+    "**{attacker}** steals **{defender}'s** Waifu. This hurts... **{defender}** gets ***{value} damage***!"
 ]
 
 listAttackCrit = [
-    "**{attacker}** dreht sich drei mal in der Luft und verpasst **{defender}** einen Roundhouse-Kick mit 🔥***{value} Schaden***!",
-    "**{attacker}** niest **{defender}** ins Gesicht. **{defender}** ist nicht geimpft und bekommt satte 🔥***{value} Schaden***!",
-    "**{attacker}** zieht seine Schuhe aus. {defender} findet seine Nasenklammer nicht und bekommt 🔥***{value} Schaden***!",
-    "**{attacker}** hat sich die Haare geglättet und schlägt sie **{defender}** mit unglaublicher Eleganz ins Gesicht. 🔥***{value} Schaden***!",
-    "**{attacker}** macht das Fenster auf. **{defender}**: 'Spinnst du? Es ist Winter!' Das sind 🔥***{value} Schaden*** an **{defender}**",
-    "**{attacker}** beichtet **{defender}**, dass er noch nie Herr der Ringe gesehen hat. Das ist zu brutal für **{defender}**. 🔥***{value} Schaden*** an **{defender}**",
-    "**{attacker}** beichtet **{defender}**, dass er noch nie Star Wars gesehen hat. Das ist zu brutal für **{defender}**. 🔥***{value} Schaden*** an **{defender}**",
-    "**{attacker}** beichtet **{defender}**, dass er noch nie Sword Art Online gesehen hat. Das ist zu brutal für **{defender}**. 🔥***{value} Schaden*** an **{defender}**"
+    "**{attacker}** turns three times in the air and hits **{defender}** with a Roundhouse-Kick in his face. 🔥***{value} damage***!",
+    "**{attacker}** sneezes in **{defender}'s** face. **{defender}** is not vaccinated and gets 🔥***{value} damage***!",
+    "**{attacker}** takes off her/his shoes. {defender} doesn't find her/his nose clip. 🔥***{value} damage***!",
+    "**{attacker}** straighten her/his hair and whips them **{defender}** unbelievable elegant in her/his face. 🔥***{value} damage***!",
+    "**{attacker}** opens the window. **{defender}**: 'Are you crazy? It's Winter!' That's 🔥***{value} damage*** for **{defender}**",
+    "**{attacker}** confesses to **{defender}**, that she/he has never seen Lord Of The Rings. That's too much for **{defender}**. 🔥***{value} damage*** to **{defender}**",
+    "**{attacker}** confesses to **{defender}**, that she/he has never seen Star Wars. That's too much for **{defender}**. 🔥***{value} damage*** to **{defender}**",
+    "**{attacker}** confesses to **{defender}**, that she/he has never seen Sword Art Online. That's too much for **{defender}**. 🔥***{value} damage*** to **{defender}**"
 ]

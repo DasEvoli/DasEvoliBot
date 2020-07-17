@@ -4,7 +4,7 @@
 
 import asyncio
 import random
-import utils
+import settings
 import games.fight.function_collection as function_collection
 
 # Global variables are important so we can use lambda functions
@@ -27,7 +27,7 @@ async def enter(ctx, player):
         item_collection.append(random_item)
 
     # Message that gets posted in chat. Now the player has to choose his item
-    await ctx.send("{0.mention} ist im Itemstore! Wähle eine Zahl!\n".format(player.user) +
+    await ctx.send("{0.mention} enters the Itemstore! Choose a number!\n".format(player.user) +
                         "1: " + item_collection[0][1].format(value=str(item_collection[0][2]),
                                                             name=item_collection[0][0],
                                                             symbol=item_collection[0][4]) + "\n" +
@@ -40,10 +40,10 @@ async def enter(ctx, player):
 
     # We wait 8 seconds (Sometimes it's less depending on the speed of the bot) for the user (Who entered the store) to choose an item
     try:
-        choose = await utils.bot.wait_for('message', timeout=8, check=lambda choose: choose.author.name == player.name)
+        choose = await settings.bot.wait_for('message', timeout=8, check=lambda choose: choose.author.name == player.name)
     except asyncio.TimeoutError:
         # Player was too slow to choose an item. So we leave the shop and the player doesn't get anything
-        await ctx.send("Zeit abgelaufen!")
+        await ctx.send("Time is over!")
         return
 
     # Player wrote something. We check what the chose
@@ -57,7 +57,7 @@ async def enter(ctx, player):
         # If the player did write something but not a number from 1 to 3 this message gets posted
         else:
             await ctx.send(
-                "**" + player.name + "**" + " ist Legastheniker und hat nicht das Richtige eingeben. Sehr schwach!")
+                "**" + player.name + "**" + " don't know how numbers work.")
 
 
 # Collection of items that can be in the store
@@ -69,7 +69,7 @@ async def enter(ctx, player):
 
 shopItems = [
     [
-        'Banane',
+        'Banana',
         '{symbol}**{name}** (+{value} HP)',
         20,
         lambda: function_collection.change_player_hp(current_ctx, current_player, 20),
@@ -77,48 +77,48 @@ shopItems = [
     ],
     [
         'Sushi',
-        '{symbol}**{name}** (+{value} Ausweichen)',
+        '{symbol}**{name}** (+{value} dodging)',
         5,
         lambda: function_collection.change_player_dodge(current_ctx, current_player, 5),
         "🍣"
     ],
     [
-        'Löffel',
-        '{symbol}**{name}** (+{value} Normaler Schaden)',
+        'Spoon',
+        '{symbol}**{name}** (+{value} normal damage)',
         5,
         lambda: function_collection.change_player_attack(current_ctx, current_player, 5),
         "🥄"
     ],
     [
-        "Lachender Emoji",
+        "Laugh Emoji",
         '{symbol}**{name}** ({value} HP)',
         -100,
         lambda: function_collection.change_player_hp(current_ctx, current_player, -100),
         "🤣"
     ],
     [
-        "Schild",
-        '{symbol}**{name}** (+{value} Immun)',
+        "Shield",
+        '{symbol}**{name}** (+{value} immunity)',
         2,
         lambda: function_collection.change_player_immune(current_ctx, current_player, 2),
         "🛡"
     ],
     [
         "Michael Jackson",
-        '{symbol}**{name}** (+{value} Normaler Schaden)',
+        '{symbol}**{name}** (+{value} normal damage)',
         6,
         lambda: function_collection.change_player_attack(current_ctx, current_player, 6),
         "🕴"
     ],
     [
-        "Hund",
-        '{symbol}**{name}** (+{value} Immun)',
+        "Dog",
+        '{symbol}**{name}** (+{value} immunity)',
         3,
         lambda: function_collection.change_player_immune(current_ctx, current_player, 3),
         "🐶"
     ],
     [
-        "Mathebuch",
+        "Mathbook",
         '{symbol}**{name}** (+{value} HP)',
         50,
         lambda: function_collection.math_book(current_ctx, current_player, 50),

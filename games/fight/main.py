@@ -1,6 +1,5 @@
 # Main function for the fight module
 
-import discord
 import random
 import asyncio
 import games.fight.jsoncontroller
@@ -11,8 +10,8 @@ import games.fight.function_collection
 
 # Easy to adjust values
 # Chances are always in %
-basishp = 100
-eventchance = 4 
+basis_hp = 100
+eventchance = 5 
 specialchance = 15
 shopchance = 10
 
@@ -36,7 +35,7 @@ class Fight:
     def init_players(self):
         return_player_list = []
         for player in self.fighterlist:
-            player_obj = Player(player.name, basishp, player.id, player)
+            player_obj = Player(player.name, basis_hp, player.id, player)
             return_player_list.append(player_obj)
         self.fighterlist.clear()
         return return_player_list
@@ -44,10 +43,9 @@ class Fight:
 
     # This function gets called in dasevolibot.py by using the command "$fight"
     async def start(self):
-        await self.ctx.send("Kampf wird gestartet...")
+        await self.ctx.send("Fight gets started...")
         self.all_players = self.init_players()
         self.alivePlayers = self.all_players
-
 
         # We save statistics in json
         # Json data is seperated per server. That means a user can have different statistics per server
@@ -92,13 +90,13 @@ class Fight:
             while attacker == self.last_attacker:
                 attacker = random.choice(self.alivePlayers)
             self.last_attacker = attacker
-            await self.ctx.send("**" + attacker.name + "**" + " ist an der Reihe!")
+            await self.ctx.send("It's **" + attacker.name + "'**" + " turn!")
             await asyncio.sleep(2)
 
             # Check if attacker is stunned
             # If true nothing happens and the round ends
             if attacker.stun > 0:
-                await self.ctx.send("**" + attacker.name + "**" + " ist noch im Stun! 😴")
+                await self.ctx.send("**" + attacker.name + "**" + " is still in stun! 😴")
                 await self.end_round()
                 continue
             await asyncio.sleep(1)
@@ -123,7 +121,7 @@ class Fight:
                     continue
 
             # Attacker and Defender are getting announced in chat
-            await self.ctx.send("**" + attacker.name + "**" + " greift " + "**" + defender.name + "** an!")
+            await self.ctx.send("**" + attacker.name + "**" + " attacks " + "**" + defender.name + "**!")
             await asyncio.sleep(2)
 
             # Special
@@ -145,15 +143,12 @@ class Fight:
 
     async def end_game(self):
         if len(self.alivePlayers) == 0:
-            await self.ctx.send("😖**ALLE SPIELER SIND GESTORBEN**😖")
+            await self.ctx.send("😖**ALL PLAYERS ARE DEAD**😖")
             for player in self.all_players:
                 games.fight.jsoncontroller.add_lose(self.ctx.guild.name, player)
 
         else:
-            await self.ctx.send("🏆 Glückwunsch! Gewinner ist **" + self.alivePlayers[0].name + "**! 🏆 ")
-            # small easteregg for my SO
-            if self.alivePlayers[0].name == "Kitsu":
-                await self.ctx.send("🐟")
+            await self.ctx.send("🏆 Congratulation! Winner is **" + self.alivePlayers[0].name + "**! 🏆 ")
 
             for player in self.all_players:
                 if player != self.alivePlayers[0]:
@@ -170,11 +165,11 @@ class Fight:
         tmp_list = []
         for player in self.alivePlayers:
             if player.hp < 1:
-                await self.ctx.send("💔**" + player.name + "** wurde vernichtet!💔")
+                await self.ctx.send("💔**" + player.name + "** was destroyed!💔")
                 if attacker is None:
                     continue
                 else:
-                    await self.ctx.send("**" + attacker.name + "** hat einen neuen Kill!")
+                    await self.ctx.send("**" + attacker.name + "** has a new kill!")
                     games.fight.jsoncontroller.add_kill(self.ctx.guild.name, attacker)
                     continue
             else:
@@ -184,7 +179,7 @@ class Fight:
     # New round gets started
     # Effects like immunity are getting decreased by 1
     async def end_round(self):
-        await self.ctx.send("Runde " + str(self.current_round) + " endet...")
+        await self.ctx.send("Round " + str(self.current_round) + " ended...")
         self.current_round += 1
         for player in self.alivePlayers:
             if player.immune > 0: player.immune -= 1

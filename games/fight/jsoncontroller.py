@@ -7,7 +7,7 @@
 # TODO Json file needs at least this '"{server": {}}' to work. We should automate it
 
 import json
-import utils
+import settings
 # To use file stats
 import os
 # To use is_file()
@@ -123,13 +123,13 @@ def add_server(servername):
 
 
 # Posts the statistic of a user
-# You can mention multiple users but need atleast one mention
-@utils.bot.command()
+# You can mention multiple users but need at least one mention
+@settings.bot.command()
 async def statistic(ctx):
     mentions = ctx.message.mentions
     servername = ctx.guild.name
     if len(mentions) <= 0:
-        await ctx.send("Es wurde kein User markiert")
+        await ctx.send("No user was selected")
         return
     else:
         with open('games/fight/fight_statistics.json', 'r') as f:
@@ -138,17 +138,17 @@ async def statistic(ctx):
         for item in data['server'][servername]:
             if str(mentions[0].id) == item['id']:
                 await ctx.send(item['name'] + "\n"
-                               + "Spiele: " + str(item['games']) + "\n"
-                               + "Siege: " + str(item['wins']) + "\n"
-                               + "Niederlagen: " + str(item['loses']) + "\n"
+                               + "Games: " + str(item['games']) + "\n"
+                               + "Wins: " + str(item['wins']) + "\n"
+                               + "Loses: " + str(item['loses']) + "\n"
                                + "Kills: " + str(item['kills']) + "\n"
-                               + "Ranglistenpunkte: " + str(item['points']) + "\n"
-                               + "Spiele in dieser Season: " + str(item['seasongames']))
+                               + "Rangpoints: " + str(item['points']) + "\n"
+                               + "Games this season: " + str(item['seasongames']))
                 return
-    await ctx.send("Kein Spieler gefunden mit dem Namen: " + mentions[0].name)
+    await ctx.send("No players found with the name: " + mentions[0].name)
 
 # Posts the ranking of all players on that server
-@utils.bot.command()
+@settings.bot.command()
 async def ranking(ctx):
     servername = ctx.guild.name
     with open('games/fight/fight_statistics.json', 'r') as f:
