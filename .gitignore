@@ -9,6 +9,8 @@ __pycache__/
 settings.py
 *.sln
 *.pyproj
+alert/channels.json
+games/fight/fight_statistics.json
 
 
 # C extensions

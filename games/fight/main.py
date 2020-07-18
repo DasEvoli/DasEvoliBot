@@ -90,7 +90,7 @@ class Fight:
             while attacker == self.last_attacker:
                 attacker = random.choice(self.alivePlayers)
             self.last_attacker = attacker
-            await self.ctx.send("It's **" + attacker.name + "'**" + " turn!")
+            await self.ctx.send("It's **" + attacker.name + "'s**" + " turn!")
             await asyncio.sleep(2)
 
             # Check if attacker is stunned

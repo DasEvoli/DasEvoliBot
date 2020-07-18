@@ -1,9 +1,7 @@
 # DasEvoliBot
 My own discord bot different features. I originally created this bot for a friend who wanted a little fun game on his Discord server. It's full of "inside jokes" so please understand some silliness. Right now you can start a little fun fight game and setup alerts when someone starts their stream on Twitch.com
 
-If you want to join this bot to your server follow this link: https://discordapp.com/api/oauth2/authorize?client_id=549831896759140353&permissions=8&scope=bot
-
-Permissions probably need some adjustments. 
+If you want to join this bot to your server follow this link: https://discord.com/api/oauth2/authorize?client_id=549831896759140353&permissions=190464&scope=bot
 
 ## Requirements
 * Python 3.5.3 or higher
