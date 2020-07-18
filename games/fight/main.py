@@ -49,8 +49,8 @@ class Fight:
 
         # We save statistics in json
         # Json data is seperated per server. That means a user can have different statistics per server
-        if not games.fight.jsoncontroller.check_file_exists():
-            games.fight.jsoncontroller.create_file()
+        if not games.fight.jsoncontroller.statistic_file_exists():
+            games.fight.jsoncontroller.create_statistic_file()
         if not games.fight.jsoncontroller.check_server_exists(self.ctx.guild.name):
             games.fight.jsoncontroller.add_server(self.ctx.guild.name)
         for player in self.all_players:

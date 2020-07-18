@@ -14,12 +14,27 @@ import time
 class json_handler:
 
     @staticmethod
+    def alert_file_exists():
+        f = Path('alert/channels.json')
+        return f.is_file()
+
+    @staticmethod
+    def create_alert_file():
+        with open('alert/channels.json', 'w+') as f:
+            data = {}
+            data['discord_server'] = {}
+            json_dump = json.dumps(data)
+            f.write(json_dump)
+            f.flush
+            f.close
+
+    @staticmethod
     def discord_server_exists(discord_server: str):
         with open('alert/channels.json', 'r') as f:
             # We need to check if the file is empty
-            if os.stat("alert/channels.json").st_size == 0:
-                return False
             data = json.load(f)
+            if len(data['discord_server']) < 1:
+                return False
             f.close()
 
         for key in data['discord_server'].keys():
@@ -82,7 +97,9 @@ class main:
 
     def __init__(self):
         settings.api_token = self.get_api_token()
-
+        if not json_handler.alert_file_exists():
+            json_handler.create_alert_file()
+            
     # Twitch api requires now for every api call an access_token
     def get_api_token(self):
         try:

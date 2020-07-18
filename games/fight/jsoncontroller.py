@@ -13,13 +13,20 @@ import os
 # To use is_file()
 from pathlib import Path
 
-def check_file_exists():
+def statistic_file_exists():
     fight_statistic_file = Path('games/fight/fight_statistics.json')
     return fight_statistic_file.is_file()
 
 
-def create_file():
-    file = open('games/fight/fight_statistics.json', 'w+')
+def create_statistic_file():
+    with open('games/fight/fight_statistics.json', 'w+') as f:
+        data = {}
+        data['server'] = {}
+        json_dump = json.dumps(data)
+        f.write(json_dump)
+        f.flush
+        f.close
+
 
 
 def add_new_player(servername, player):

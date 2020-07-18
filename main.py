@@ -6,6 +6,7 @@ import settings
 import datetime
 import time
 import asyncio
+import os
 
 # Gets called when starting the bot
 @settings.bot.event
@@ -16,6 +17,13 @@ async def on_ready():
     # Prints every server the bot is on
     for guild in settings.bot.guilds:
         print(guild.name)
+
+    # Setup files
+    #if not os.path.isfile("alert/channels.json"):
+
+    #if not os.path.isfile("games/fight/fight_statistics.json"):
+        #file = open('games/fight/fight_statistics.json', 'w+')
+        #file.close
 
     # Object for alert module
     # Outsourcing would be better so the bot works without this module
