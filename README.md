@@ -13,10 +13,6 @@ Permissions probably need some adjustments.
 * pip install requests
 * Fill data in your_settings.py and change your_settings.py to settings.py
 
-## Adding settings.py
-You need to add a settings.py file in your main dictionary to add your own token.
-Insert: Token: "test123token"
-
 ## Bot in action (Now in English!)
 ### Fight Module
 #### Attacks
