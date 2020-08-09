@@ -40,11 +40,6 @@ async def on_ready():
 
 @settings.bot.command()
 async def fight(ctx):
-    if settings.debug_mode:
-        if ctx.message.author.name != settings.debug_name:
-            await ctx.send("I'm currently working on this bot. Please try again later.")
-            return
-    
     # So you can see if anyone uses this command on their server
     print(datetime.datetime.now())
     print("Fight started by " + ctx.message.author.name)
@@ -87,10 +82,6 @@ async def fight(ctx):
 
 @settings.bot.command()
 async def clear(ctx, amount: int):
-    if settings.debug_mode:
-        if ctx.message.author.name != settings.debug_name:
-            await ctx.send("I'm currently working on this bot. Please try again later.")
-            return
     if amount == -1:
         await ctx.channel.purge(limit=9999)
         return
@@ -101,45 +92,24 @@ async def clear(ctx, amount: int):
 # with a cooldown (currently 12 hours)
 
 @settings.bot.command()
-async def add_twitch_alert(ctx, twitch_channel=""):
-    if settings.debug_mode:
-        if ctx.message.author.name != settings.debug_name:
-            await ctx.send("I'm currently working on this bot. Please try again later.")
-            return
+async def twitch_alert(ctx, twitch_channel=""):
     if twitch_channel == "":
         await ctx.send("No Twitch channel defined.")
         return
     twitch_channel = twitch_channel.lower()
+    # If discord server is not in the alert list, we add it
     if not alert.twitch.json_handler.discord_server_exists(ctx.guild.name):
         alert.twitch.json_handler.add_discord_server(ctx.guild.name)
+    # If alert already exist we remove it. If alert doesn't exist, we add it
     if not alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
         alert.twitch.json_handler.add_twitch_channel(ctx.guild.name, twitch_channel, ctx.channel.id)
-    if alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
-        await ctx.send("**{}** was added successfully to the Twitch alert list. As soon as this Twitch channel goes online this discord channel gets a notification.".format(twitch_channel))
-    else: await ctx.send("Error happend. Could not add **{}** to the alert list.".format(twitch_channel))     
+        if alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
+            await ctx.send("**{}** was added successfully to the Twitch alert list. As soon as this Twitch channel goes online this discord channel gets a notification.".format(twitch_channel))
+    else:
+        alert.twitch.json_handler.remove_twitch_channel(ctx.guild.name, twitch_channel)
+        if not alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
+            await ctx.send("**{}** was removed successfully from the alert list. This discord channel will not get any notifications anymore if this Twitch channel goes online.".format(twitch_channel))    
             
-     
-# Command to remove the username of a twitch channel from the alert list. This also clears the cooldown.
-
-@settings.bot.command()
-async def remove_twitch_alert(ctx, twitch_channel=""):
-    if settings.debug_mode:
-        if ctx.message.author.name != settings.debug_name:
-            await ctx.send("I'm currently working on this bot. Please try again later.")
-            return
-    if twitch_channel == "":
-        await ctx.send("No Twitch channel defined.")
-        return
-    twitch_channel = twitch_channel.lower()
-    if not alert.twitch.json_handler.discord_server_exists(ctx.guild.name):
-        alert.twitch.json_handler.add_discord_server(ctx.guild.name)
-    if not alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
-        await ctx.send("**{}** does not exist in the alert list for this server.".format(twitch_channel))
-        return
-    else: alert.twitch.json_handler.remove_twitch_channel(ctx.guild.name, twitch_channel)
-    if not alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
-        await ctx.send("**{}** was removed successfully from the alert list. This discord channel will not get any notifications anymore if this Twitch channel goes online.".format(twitch_channel))
-    else: await ctx.send("Error happend. Could not remove **{}** from the alert list.".format(twitch_channel))
 
 # Starts bot
 # You need to add your token into the settings file
