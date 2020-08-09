@@ -1,6 +1,7 @@
 # Starting point and main interface of the bot
 
 import games.fight.main
+import games.love.main
 import alert.twitch
 import settings
 import datetime
@@ -18,19 +19,19 @@ async def on_ready():
     for guild in settings.bot.guilds:
         print(guild.name)
 
-    # Setup files
-    #if not os.path.isfile("alert/channels.json"):
-
-    #if not os.path.isfile("games/fight/fight_statistics.json"):
-        #file = open('games/fight/fight_statistics.json', 'w+')
-        #file.close
-
     # Object for alert module
-    # Outsourcing would be better so the bot works without this module
+    # Todo Outsourcing would be better so the bot works without this module
     alert_obj = alert.twitch.main()
     # Starting checking for alerts. This function loops in a separate thread
     await alert_obj.check_alerts()
 
+@settings.bot.command()
+async def commands(ctx):
+    await ctx.send("$fight name1 name2 name3... (Starts a fighting game. Unlimited players. You don't need to add yourself)")
+    await ctx.send("$clear -1 (Clears as many messages as possible)")
+    await ctx.send("$clear 1 (Clears the last message. This number is adjustable)")
+    await ctx.send("$twitch_alert twitchname (Removes or adds a new Twitch alert)")
+    await ctx.send("$love name1 (shows how strong your love is with name1)")
 
 
 # Starts the fighting game between all players who are mentioned + author
@@ -109,7 +110,24 @@ async def twitch_alert(ctx, twitch_channel=""):
         alert.twitch.json_handler.remove_twitch_channel(ctx.guild.name, twitch_channel)
         if not alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
             await ctx.send("**{}** was removed successfully from the alert list. This discord channel will not get any notifications anymore if this Twitch channel goes online.".format(twitch_channel))    
-            
+
+# Little game that prints a random number between 0 - 100 to show love between 2 users    
+@settings.bot.command()
+async def love(ctx):
+    author = ctx.message.author
+    mentionlist = ctx.message.mentions
+    if len(mentionlist) > 1:
+        await ctx.send("Stop! You can't calculate your love for more than 1 person on this discord server!")
+        return 
+    elif len(mentionlist) == 0:
+        await ctx.send("To calculate your love to someone you need to specify one person.")
+        return
+    else: 
+        name = mentionlist[0]
+        await games.love.main.calculate_love(ctx, author, name)
+    
+
+
 
 # Starts bot
 # You need to add your token into the settings file
