@@ -50,7 +50,7 @@ listSpecials = [
         settings.dict_special + "fluffy.gif"
     ],
     [
-        "**{attacker}** has to rest and places something on the ground. A big dome surrounds him. ***{attacker}*** is "
+        "**{attacker}** has to rest and places something on the ground. A big dome surrounds him/her. ***{attacker}*** is "
         "***immune*** for ***{value} rounds!***",
         lambda: function_collection.change_player_immune(current_ctx_global, attacker_global, 4),
         4,
@@ -66,15 +66,15 @@ listSpecials = [
         settings.dict_special + "artillerie.jpg"
     ],
     [
-        "**{attacker}** punshes a tunnel. Hiding in the void no one can hit him. ***immune for {value} rounds!***",
+        "**{attacker}** punshes a tunnel. Hiding in the void no one can hit him/her. ***immune for {value} rounds!***",
         lambda: function_collection.change_player_immune(current_ctx_global, attacker_global, 3),
         3,
         0,
         settings.dict_special + "void.jpg"
     ],
     [
-        "**{attacker}**: Bambazoo...Bamba... Bambamala.. fool em! **{attacker}** sends a clone and fools his enemies."
-        "immune fpr ***{value}*** rounds!",
+        "**{attacker}**: Bambazoo...Bamba... Bambamala.. fool em! **{attacker}** sends a clone and fools his/her enemies. "
+        "Immune for ***{value}*** rounds!",
         lambda: function_collection.change_player_immune(current_ctx_global, attacker_global, 3),
         3,
         0,
@@ -96,7 +96,7 @@ listSpecials = [
         settings.dict_special + "teen.jpg"
     ],
     [
-        "**{attacker}** walks slowly. IT'S HIGH NOON............DRAW! ***{value} damage*** to **EVERYONE except {attacker}**",
+        "**{attacker}** walks slowly. IT'S HIGH NOON...DRAW! ***{value} damage*** to **EVERYONE except {attacker}**",
         lambda: function_collection.change_players_hp(current_ctx_global, alive_players_global, -15, -1, exception=attacker_global),
         15,
         -1,

@@ -43,7 +43,7 @@ class Fight:
 
     # This function gets called in dasevolibot.py by using the command "$fight"
     async def start(self):
-        await self.ctx.send("Fight gets started...")
+        await self.ctx.send("Fight starts...")
         self.all_players = self.init_players()
         self.alivePlayers = self.all_players
 
@@ -96,7 +96,7 @@ class Fight:
             # Check if attacker is stunned
             # If true nothing happens and the round ends
             if attacker.stun > 0:
-                await self.ctx.send("**" + attacker.name + "**" + " is still in stun! 😴")
+                await self.ctx.send("**" + attacker.name + "**" + " is still stunned! 😴")
                 await self.end_round()
                 continue
             await asyncio.sleep(1)

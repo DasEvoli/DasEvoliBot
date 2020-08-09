@@ -155,12 +155,12 @@ async def math_book(ctx, player, value):
     try:
         answer = await settings.bot.wait_for('message', timeout=10, check=lambda answer: answer.author.name == player.name)
     except asyncio.TimeoutError:
-        await ctx.send("Time is over! For the next time practice more!")
+        await ctx.send("Time is over! Next time practice more!")
         return
     if result == int(answer.content):
         await ctx.send("Wow, insane math skills! You are getting healed for ***" + str(value) + "***")
         if player.immune > 0:
-            await ctx.send("**" + player.name + "** ist immune")
+            await ctx.send("**" + player.name + "** is immune")
             return
         player.hp += value
     else:
@@ -192,7 +192,7 @@ async def normal_attack(ctx, attacker, defender):
 
     # Now it checks if the defender is immune. If so the attack has no effect
     if defender.immune > 0:
-        await ctx.send("🛡**" + defender.name + "** ist immune 🛡")
+        await ctx.send("🛡**" + defender.name + "** is immune 🛡")
         return
     
     # The defender also has the chance to dodge the attack to add more randomness

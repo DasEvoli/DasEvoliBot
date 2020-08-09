@@ -44,7 +44,7 @@ async def start_event(ctx, all_players, alive_players):
 
 listEvents = [
     [
-        "The earth starts to tremble. Is it an earthquake? OH MO, THE **GAMESCOM** ***{value} damage*** to **EVERYONE**!",
+        "The earth starts to tremble. Is it an earthquake? OH NO, THE **GAMESCOM** JUST OPENED ***{value} damage*** to **EVERYONE**!",
         lambda: function_collection.change_players_hp(current_ctx_global, alive_players_global, -30, -1),
         30,
         -1,
@@ -59,21 +59,21 @@ listEvents = [
         settings.dict_event + "hanzo.gif"
     ],
     [
-        "Oh a beautiful Frau! OH NO, IT'S SNEAKY! ***{value} damage*** to **EVERYONE**!",
+        "Oh a beautiful woman! OH NO, IT'S SNEAKY! ***{value} damage*** to **EVERYONE**!",
         lambda: function_collection.change_players_hp(current_ctx_global, alive_players_global, -20, -1),
         20,
         -1,
         settings.dict_event + "sneaky.jpg"
     ],
     [
-        "Someone throws Cheese Cake! OH NO, it has Oranges in it! ***{value} damage*** to **EVERYONE**",
+        "Someone baked Cheese Cake! OH NO, it has Oranges in it! ***{value} damage*** to **EVERYONE**",
         lambda: function_collection.change_players_hp(current_ctx_global, alive_players_global, -20, -1),
         20,
         -1,
         settings.dict_event + "cheesecake.jpg"
     ],
     [
-        "Someone throws Cheese Cake! No Oranges. That tastes good! ***{value} healing*** for **EVERYONE**",
+        "Someone baked Cheese Cake! No Oranges. That tastes good! ***{value} healing*** for **EVERYONE**",
         lambda: function_collection.change_players_hp(current_ctx_global, alive_players_global, 30, -1),
         30,
         -1,
@@ -97,7 +97,7 @@ listEvents = [
 
 # Events are something big with a low chance. So it gets announced with customizable strings. In those strings 2 random players are getting mentioned 
 listEventAnnounce = [
-    "**{player1}** and **{player2}** feel a disturbance in the force...",
+    "**{player1}** and **{player2}** are feeling a disturbance in the force...",
     "**{player1}** turns around and feels that something is wrong...",
     "Unfavorable winds **{player1}** is preparing itself for something...",
     "**{player1}** ends her/his stream immediately. What is happening...",
