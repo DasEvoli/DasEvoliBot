@@ -8,6 +8,7 @@ import datetime
 import time
 import asyncio
 import os
+import discord
 
 # Gets called when starting the bot
 @settings.bot.event
