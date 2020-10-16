@@ -69,7 +69,8 @@ class json_handler:
         data['discord_server'][discord_server].append({
             'twitch_channel': twitch_channel,
             'last_alert': 0,
-            'discord_channel_id': discord_channel_id
+            'discord_channel_id': discord_channel_id,
+            'was_online': False
         })
         with open('alert/channels.json', 'w') as f:
             json.dump(data, f, indent=2)
@@ -120,7 +121,7 @@ class main:
     async def check_alerts(self):
         while True:
             # We wait a bit so we don't call it too often
-            await asyncio.sleep(30)
+            await asyncio.sleep(10)
 
             # We get the currently saved alerts
             with open('alert/channels.json', 'r') as f:
@@ -130,9 +131,9 @@ class main:
             # We iterate through every server and get check every alert
             for discord_server in data['discord_server']:
                 for item in data['discord_server'][discord_server]:
-                    # Cooldown
+                    # Cooldown (currently 1 hour)
                     current_time_s = int(round(time.time()))
-                    if current_time_s - item['last_alert'] < 43200:
+                    if current_time_s - item['last_alert'] < 3600:
                         # Still has cooldown
                         continue
                     else: 
@@ -140,11 +141,24 @@ class main:
                             # Twitch Channel is live and alert has no cooldown
                             # We save the current time for this alert so we can test later if it is on cooldown
                             item['last_alert'] = current_time_s
-                            with open('alert/channels.json', 'w') as f:
-                                json.dump(data, f, indent=2)
-                                f.close()
-                            # Alert in saved channel
-                            await self.send_alert(item['discord_channel_id'], item['twitch_channel'])
+                            if item['was_online']:
+                                with open('alert/channels.json', 'w') as f:
+                                    json.dump(data, f, indent=2)
+                                    f.close()
+                                break
+                            else: 
+                                await self.send_alert(item['discord_channel_id'], item['twitch_channel'])
+                                item['was_online'] = True
+                                with open('alert/channels.json', 'w') as f:
+                                    json.dump(data, f, indent=2)
+                                    f.close()
+                        else:
+                            if item['was_online']:
+                                item['was_online'] = False
+                                with open('alert/channels.json', 'w') as f:
+                                    json.dump(data, f, indent=2)
+                                    f.close()
+                            
 
     # Get request to twitch api to check if user is online
     async def live_on_twitch(self, twitch_channel:str):
