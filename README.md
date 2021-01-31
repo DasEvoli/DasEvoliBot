@@ -13,15 +13,16 @@ If you want to join this bot to your server follow this link: https://discord.co
 
 ## Bot in action (Now in English!)
 ### Fight Module
-#### Attacks
-![](https://i.imgur.com/4uwINSw.png)
+#### Attacks with possible dodges/crits
+![](https://imgur.com/a/pwnuzwp)
 #### Specials
-![](https://i.imgur.com/3xwYq90.png)
-#### Statistics
-![](https://i.imgur.com/ZYi8KBw.png)
+![](https://imgur.com/a/ftoSTxJ)
 
 ### Twitch Alert Module
 ![](https://i.imgur.com/bEpDfeh.png)
+
+### Love Module
+![](https://imgur.com/a/xHXG3Bw)
 
 ## Authors
 * Sleepyfox (Vinzenz Wetzel)
