@@ -123,41 +123,46 @@ class main:
             # We wait a bit so we don't call it too often
             await asyncio.sleep(10)
 
-            # We get the currently saved alerts
-            with open('alert/channels.json', 'r') as f:
-                data = json.load(f)
-                f.close()
+            try:
+                # We get the currently saved alerts
+                with open('alert/channels.json', 'r') as f:
+                    data = json.load(f)
+                    f.close()
 
-            # We iterate through every server and get check every alert
-            for discord_server in data['discord_server']:
-                for item in data['discord_server'][discord_server]:
-                    # Cooldown (currently 1 hour)
-                    current_time_s = int(round(time.time()))
-                    if current_time_s - item['last_alert'] < 3600:
-                        # Still has cooldown
-                        continue
-                    else: 
-                        if await self.live_on_twitch(item['twitch_channel']):
-                            # Twitch Channel is live and alert has no cooldown
-                            # We save the current time for this alert so we can test later if it is on cooldown
-                            item['last_alert'] = current_time_s
-                            if item['was_online']:
-                                with open('alert/channels.json', 'w') as f:
-                                    json.dump(data, f, indent=2)
-                                    f.close()
-                                break
-                            else: 
-                                await self.send_alert(item['discord_channel_id'], item['twitch_channel'])
-                                item['was_online'] = True
-                                with open('alert/channels.json', 'w') as f:
-                                    json.dump(data, f, indent=2)
-                                    f.close()
-                        else:
-                            if item['was_online']:
-                                item['was_online'] = False
-                                with open('alert/channels.json', 'w') as f:
-                                    json.dump(data, f, indent=2)
-                                    f.close()
+                # We iterate through every server and get check every alert
+                for discord_server in data['discord_server']:
+                    for item in data['discord_server'][discord_server]:
+                        # Cooldown (currently 1 hour)
+                        current_time_s = int(round(time.time()))
+                        if current_time_s - item['last_alert'] < 3600:
+                            # Still has cooldown
+                            continue
+                        else: 
+                            if await self.live_on_twitch(item['twitch_channel']):
+                                # Twitch Channel is live and alert has no cooldown
+                                # We save the current time for this alert so we can test later if it is on cooldown
+                                item['last_alert'] = current_time_s
+                                if item['was_online']:
+                                    with open('alert/channels.json', 'w') as f:
+                                        json.dump(data, f, indent=2)
+                                        f.close()
+                                    break
+                                else: 
+                                    await self.send_alert(item['discord_channel_id'], item['twitch_channel'])
+                                    item['was_online'] = True
+                                    with open('alert/channels.json', 'w') as f:
+                                        json.dump(data, f, indent=2)
+                                        f.close()
+                            else:
+                                if item['was_online']:
+                                    item['was_online'] = False
+                                    with open('alert/channels.json', 'w') as f:
+                                        json.dump(data, f, indent=2)
+                                        f.close()
+            except Exception as e:
+                print('Exception thrown in check_alerts: ')
+                print(e)
+                self.check_alerts()
                             
 
     # Get request to twitch api to check if user is online
@@ -172,18 +177,25 @@ class main:
                 print("Bot is not authorized to check if channel is online")
                 settings.api_token = self.get_api_token()
                 self.live_on_twitch(twitch_channel)
-            # If data is empty but status code 200, channel is offline
+            # If data is empty but status code 200, channel is offline. If it's not empty channel is online
             if response.status_code == 200:
                 return len(data['data']) > 0
             if response.status_code != 200:
-                print("Unknown status error code")
+                print("Unknown status error code: ")
+                print(response.status_code)
+                return False
         except Exception as e:
+            print(e)
             return False
 
     # Posts a message in saved channel (We iterate through every discord_server and channel to find the right one)
     # There is probably a better, faster way
     async def send_alert(self, channel_id, twitch_channel):
-        for guild in settings.bot.guilds:
-            for channel in guild.channels:
-                if channel.id == channel_id:
-                    await channel.send("@everyone https://www.twitch.tv/{} JUST WENT ONLINE!".format(twitch_channel))
+        try:
+            for guild in settings.bot.guilds:
+                for channel in guild.channels:
+                    if channel.id == channel_id:
+                        await channel.send("@everyone https://www.twitch.tv/{} JUST WENT ONLINE!".format(twitch_channel))
+        except Exception as e:
+            print(e)
+            return False
