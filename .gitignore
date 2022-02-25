@@ -7,6 +7,7 @@ __pycache__/
 .idea/
 .vs/
 settings.py
+channels.json
 *.sln
 *.pyproj
 alert/channels.json

@@ -1,5 +1,5 @@
 # DasEvoliBot
-My own discord bot different features. I originally created this bot for a friend who wanted a little fun game on his Discord server. It's full of "inside jokes" so please understand some silliness. Right now you can start a little fun fight game and setup alerts when someone starts their stream on Twitch.com
+My own discord bot different features. I originally created this bot for a friend who wanted a little fun game on his Discord server. It's silly but was nice practice for some API and asynchron stuff.
 
 If you want to join this bot to your server follow this link: https://discord.com/api/oauth2/authorize?client_id=549831896759140353&permissions=190464&scope=bot
 
@@ -9,7 +9,8 @@ If you want to join this bot to your server follow this link: https://discord.co
 ## Setup
 * pip install discord
 * pip install requests
-* Fill data in your_settings.py and change your_settings.py to settings.py
+* Fill data in your_settings.py and change "your_settings.py" to "settings.py"
+* Change "your_channels.json" to channels.json
 
 ## Bot in action (Now in English!)
 ### Fight Module
@@ -25,7 +26,7 @@ If you want to join this bot to your server follow this link: https://discord.co
 ![](https://imgur.com/a/xHXG3Bw)
 
 ## Authors
-* Sleepyfox (Vinzenz Wetzel)
+* DasEvoli (Vinzenz Wetzel)
 
 ## License
 This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 (GPL3)

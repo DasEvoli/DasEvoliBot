@@ -1,5 +1,3 @@
-# Module to add the username of a twitch channel to an alert list. Next time the user goes online your channel where you used this command will get a notification
-
 import json
 import settings
 import os
@@ -31,7 +29,6 @@ class json_handler:
     @staticmethod
     def discord_server_exists(discord_server: str):
         with open('alert/channels.json', 'r') as f:
-            # We need to check if the file is empty
             data = json.load(f)
             if len(data['discord_server']) < 1:
                 return False
@@ -104,14 +101,12 @@ class main:
     # Twitch api requires now for every api call an access_token
     def get_api_token(self):
         try:
-            link = "https://id.twitch.tv/oauth2/token?client_id=" + settings.client_id + "&client_secret=" + settings.client_secret + "&grant_type=client_credentials"
+            link = "https://id.twitch.tv/oath2/token?client_id=" + settings.client_id + "&client_secret=" + settings.client_secret + "&grant_type=client_credentials"
             response = requests.post(link)
-            if response.status_code != 200:
-                print("Couldn't get a new access_token!")
-                return None
+            if response.status_code != 200: raise Exception("Couldn't get Access Token. Error 200")
             data = json.loads(response.text)
             if not data['access_token']:
-                return None
+                raise Exception("Couldn't get Access Token. No access_token in response text")
             return data['access_token']
         except Exception as e:
             print(e)
@@ -120,16 +115,14 @@ class main:
     # This function loops and checks x seconds if any alert should fire
     async def check_alerts(self):
         while True:
-            # We wait a bit so we don't call it too often
-            await asyncio.sleep(10)
-
+            await asyncio.sleep(settings.twitch_alert_check_delay)
             try:
-                # We get the currently saved alerts
                 with open('alert/channels.json', 'r') as f:
                     data = json.load(f)
                     f.close()
 
-                # We iterate through every server and get check every alert
+                # We iterate through every server and check every alert
+                # Todo Check if correct
                 for discord_server in data['discord_server']:
                     for item in data['discord_server'][discord_server]:
                         # Cooldown (currently 1 hour)
@@ -160,11 +153,9 @@ class main:
                                         json.dump(data, f, indent=2)
                                         f.close()
             except Exception as e:
-                print('Exception thrown in check_alerts: ')
                 print(e)
                 self.check_alerts()
                             
-
     # Get request to twitch api to check if user is online
     async def live_on_twitch(self, twitch_channel:str):
         link = "https://api.twitch.tv/helix/streams?user_login=" + twitch_channel
