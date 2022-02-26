@@ -1,14 +1,12 @@
 import json
 import settings
-import os
 from pathlib import Path
 import requests
 import settings
-import asyncio
 import time
+import traceback
+import asyncio
 
-
-# Handles all the json functionality for the alert function
 class json_handler:
 
     @staticmethod
@@ -58,16 +56,15 @@ class json_handler:
                 return True
         return False
 
-    # We need discord_channel_id so we know where the bot should post the message
     @staticmethod
     def add_twitch_channel(discord_server:str, twitch_channel:str, discord_channel_id:int):
         with open('alert/channels.json', 'r') as f:
             data = json.load(f)
         data['discord_server'][discord_server].append({
             'twitch_channel': twitch_channel,
-            'last_alert': 0,
+            'last_check': 0,
             'discord_channel_id': discord_channel_id,
-            'was_online': False
+            'still_online': False
         })
         with open('alert/channels.json', 'w') as f:
             json.dump(data, f, indent=2)
@@ -89,21 +86,19 @@ class json_handler:
             f.close()
 
 
-# Handles all the functionality to get the data from twitch and sends messages if anyone is online
-# Todo: We use should separete some json functions to the json class above
 class main:
 
     def __init__(self):
-        settings.api_token = self.get_api_token()
+        settings.access_token = self.get_access_token()
         if not json_handler.alert_file_exists():
             json_handler.create_alert_file()
             
-    # Twitch api requires now for every api call an access_token
-    def get_api_token(self):
+    # Twitch API requires now an Access Token for every request.
+    def get_access_token(self):
         try:
-            link = "https://id.twitch.tv/oath2/token?client_id=" + settings.client_id + "&client_secret=" + settings.client_secret + "&grant_type=client_credentials"
+            link = "https://id.twitch.tv/oauth2/token?client_id=" + settings.client_id + "&client_secret=" + settings.client_secret + "&grant_type=client_credentials"
             response = requests.post(link)
-            if response.status_code != 200: raise Exception("Couldn't get Access Token. Error 200")
+            if response.status_code != 200: raise Exception("Couldn't get Access Token. Status Code is not 200.")
             data = json.loads(response.text)
             if not data['access_token']:
                 raise Exception("Couldn't get Access Token. No access_token in response text")
@@ -112,7 +107,11 @@ class main:
             print(e)
             return None
 
-    # This function loops and checks x seconds if any alert should fire
+    # This function loops and checks x seconds if any alert should fire. This includes a cooldown.
+    # The cooldown is necessary so the alert doesn't fire if the channel was just offline for a short time.
+    # After the cooldown check comes a check if the channel was checked before and is just still online.
+    # This means when a streamer goes offline and online again after 50 minutes (depending on the setting) it will not fire an alert.
+    # Theoretically we could remove the cooldown but then the Twitch API will be called too often.
     async def check_alerts(self):
         while True:
             await asyncio.sleep(settings.twitch_alert_check_delay)
@@ -120,67 +119,50 @@ class main:
                 with open('alert/channels.json', 'r') as f:
                     data = json.load(f)
                     f.close()
-
-                # We iterate through every server and check every alert
-                # Todo Check if correct
                 for discord_server in data['discord_server']:
                     for item in data['discord_server'][discord_server]:
-                        # Cooldown (currently 1 hour)
                         current_time_s = int(round(time.time()))
-                        if current_time_s - item['last_alert'] < 3600:
-                            # Still has cooldown
+                        if current_time_s - item['last_check'] < settings.twitch_alert_cooldown:
                             continue
                         else: 
-                            if await self.live_on_twitch(item['twitch_channel']):
-                                # Twitch Channel is live and alert has no cooldown
-                                # We save the current time for this alert so we can test later if it is on cooldown
-                                item['last_alert'] = current_time_s
-                                if item['was_online']:
-                                    with open('alert/channels.json', 'w') as f:
-                                        json.dump(data, f, indent=2)
-                                        f.close()
+                            item['last_check'] = current_time_s
+                            if self.live_on_twitch(item['twitch_channel']):
+                                if item['still_online']:
                                     break
                                 else: 
                                     await self.send_alert(item['discord_channel_id'], item['twitch_channel'])
-                                    item['was_online'] = True
-                                    with open('alert/channels.json', 'w') as f:
-                                        json.dump(data, f, indent=2)
-                                        f.close()
+                                    item['still_online'] = True
                             else:
-                                if item['was_online']:
-                                    item['was_online'] = False
-                                    with open('alert/channels.json', 'w') as f:
-                                        json.dump(data, f, indent=2)
-                                        f.close()
+                                item['still_online'] = False
+                            with open('alert/channels.json', 'w') as f:
+                                json.dump(data, f, indent=2)
+                                f.close()
             except Exception as e:
                 print(e)
-                self.check_alerts()
+                continue
                             
-    # Get request to twitch api to check if user is online
-    async def live_on_twitch(self, twitch_channel:str):
+    def live_on_twitch(self, twitch_channel:str):
         link = "https://api.twitch.tv/helix/streams?user_login=" + twitch_channel
         try:
-            headers = {'client-id': settings.client_id, 'Authorization': "Bearer " + settings.api_token}
+            headers = {'client-id': settings.client_id, 'Authorization': "Bearer " + settings.access_token}
             response = requests.get(link, headers=headers)
             data = json.loads(response.text)
-            # 401 means authorization failed. We get a new token
-            if response.status_code == 401:
-                print("Bot is not authorized to check if channel is online")
-                settings.api_token = self.get_api_token()
-                self.live_on_twitch(twitch_channel)
-            # If data is empty but status code 200, channel is offline. If it's not empty channel is online
             if response.status_code == 200:
+                # if Response Data length is larger than 0 it means the user is online
                 return len(data['data']) > 0
-            if response.status_code != 200:
-                print("Unknown status error code: ")
-                print(response.status_code)
-                return False
+            if response.status_code == 401:
+                settings.access_token = self.get_access_token()
+                print("Twitch Access Token was invalid. Generating a new one.")
+                return self.live_on_twitch(twitch_channel)
+            raise("Unknwon Status Error Code: " + response.status_code)
         except Exception as e:
             print(e)
+            traceback.print_stack()
             return False
 
     # Posts a message in saved channel (We iterate through every discord_server and channel to find the right one)
-    # There is probably a better, faster way
+    # Todo: Rewrite how channels are getting checked. Instead of checking every item in every channel, just check the items and then send
+    # all channels which added this item a message.
     async def send_alert(self, channel_id, twitch_channel):
         try:
             for guild in settings.bot.guilds:
@@ -189,4 +171,4 @@ class main:
                         await channel.send("@everyone https://www.twitch.tv/{} JUST WENT ONLINE!".format(twitch_channel))
         except Exception as e:
             print(e)
-            return False
+            traceback.print_stack()
