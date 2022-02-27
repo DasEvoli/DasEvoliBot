@@ -64,34 +64,37 @@ async def fight(ctx):
 # Simple command to clear chat in a channel.
 # amount parameter how many messages you want to delete (beginning from last).
 # -1 as argument will delete every message in that channel limited to 9999.
+# 1 as argument will be turned into 2 because the command itself counts as message
 @settings.bot.command()
 async def clear(ctx, amount: int):
     if amount == -1:
         await ctx.channel.purge(limit=9999)
         return
+    if amount == 1:
+        await ctx.channel.purge(limit=2)
     await ctx.channel.purge(limit=amount)
 
 
 # Command to add the username of a twitch channel to an alert list. 
 # Next time the user goes online the channel where you used this command will get a notification
 @settings.bot.command()
-async def twitch_alert(ctx, twitch_channel: str):
-    if not twitch_channel:
+async def twitch_alert(ctx, twitch_name: str):
+    if not twitch_name:
         await ctx.send("No Twitch channel defined.")
         return
-    twitch_channel = twitch_channel.lower()
+    twitch_name = twitch_name.lower()
     # If discord server is not in the alert list, we add it
-    if not alert.twitch.json_handler.discord_server_exists(ctx.guild.name):
-        alert.twitch.json_handler.add_discord_server(ctx.guild.name)
+    if not alert.twitch.json_handler.twitch_name_exists(twitch_name):
+        alert.twitch.json_handler.add_twitch_name(twitch_name)
     # If alert already exist we remove it. If alert doesn't exist, we add it
-    if not alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
-        alert.twitch.json_handler.add_twitch_channel(ctx.guild.name, twitch_channel, ctx.channel.id)
-        if alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
-            await ctx.send("**{}** was added successfully to the Twitch alert list. As soon as this Twitch channel goes online this discord channel gets a notification.".format(twitch_channel))
+    if not alert.twitch.json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
+        alert.twitch.json_handler.add_discord_channel_id(ctx.channel.id, twitch_name)
+        if alert.twitch.json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
+            await ctx.send("**{}** was added successfully to the Twitch alert list. As soon as this Twitch channel goes online this discord channel gets a notification.".format(twitch_name))
     else:
-        alert.twitch.json_handler.remove_twitch_channel(ctx.guild.name, twitch_channel)
-        if not alert.twitch.json_handler.twitch_channel_exists(ctx.guild.name, twitch_channel):
-            await ctx.send("**{}** was removed successfully from the alert list. This discord channel will not get any notifications anymore if this Twitch channel goes online.".format(twitch_channel))    
+        alert.twitch.json_handler.remove_discord_channel_id(ctx.channel.id, twitch_name)
+        if not alert.twitch.json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
+            await ctx.send("**{}** was removed successfully from the alert list. This discord channel will not get any notifications anymore if this Twitch channel goes online.".format(twitch_name))    
 
 # Little game that prints a random number between 0 - 100 to show love between 2 users    
 @settings.bot.command()
