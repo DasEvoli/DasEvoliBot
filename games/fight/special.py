@@ -16,6 +16,7 @@ attacker_global = None
 defender_global = None
 
 async def start_special(ctx, attacker, defender, alive_players, all_players):
+    # TODO Change global to CASE
     global alive_players_global, all_players_global, current_ctx_global, attacker_global, defender_global
     all_players_global = all_players
     alive_players_global = alive_players

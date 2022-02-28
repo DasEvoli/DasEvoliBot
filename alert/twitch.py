@@ -102,7 +102,6 @@ class main:
     # This function loops and checks x seconds if any alert should fire. This includes a cooldown.
     # The cooldown is necessary so the alert doesn't fire if the channel was just offline for a short time.
     # After the cooldown check comes a check if the channel was checked before and is just still online.
-    # This means when a streamer goes offline and online again after 50 minutes (depending on the setting) it will not fire an alert.
     # Theoretically we could remove the cooldown but then the Twitch API will be called too often.
     async def check_alerts(self):
         while True:
@@ -111,6 +110,7 @@ class main:
                 with open('alert/channels.json', 'r') as f:
                     data = json.load(f)
                     f.close()
+                    # items() -> [0] = key, [1] = value
                 for twitch_name in data['twitch_names'].items():
                     current_time_s = int(round(time.time()))
                     if current_time_s - twitch_name[1]['last_check'] < settings.twitch_alert_cooldown:
