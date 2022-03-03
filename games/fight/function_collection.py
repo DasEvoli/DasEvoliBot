@@ -10,11 +10,11 @@ import games.fight.attack_strings
 # Changes the hp value of a player
 # Does not work if the player is immune
 async def change_player_hp(ctx, player, value):
-    if player.immune > 0:
-        await ctx.send("**"+player.name+"** is immune 🛡.")
+    if player.immune_rounds > 0:
+        await ctx.send("**"+ player.name +"** is immune 🛡")
         return
     player.hp += value
-    await ctx.send("**"+player.name+"**"+" has now ***"+str(player.hp)+" HP***")
+    await ctx.send("**"+ player.name +"**"+" has now ***"+str(player.hp)+" HP***")
 
 # Changes the hp value of players if they don't have an exception
 # Does not work if the player is immune
@@ -23,40 +23,38 @@ async def change_players_hp(ctx, alive_players, value, count, attacker_player=No
         for player in alive_players:
             if player == exception:
                 continue
-            if player.immune > 0:
-                await ctx.send("**"+player.name+"** is immune 🛡.")
+            if player.immune_rounds > 0:
+                await ctx.send("**"+player.name +"** is immune 🛡")
                 continue
             player.hp += value
-            await ctx.send("**"+player.name+"**"+" has now ***"+str(player.hp)+" HP***")
     else:
         for player in alive_players[:count]:
             if player == exception:
                 continue
-            if player.immune > 0:
-                await ctx.send("**"+player.name+"** is immune 🛡.")
+            if player.immune_rounds > 0:
+                await ctx.send("**"+player.name +"** is immune 🛡")
                 continue
             player.hp += value
-            await ctx.send("**"+player.name+"**"+" has now ***"+str(player.hp)+" HP***")
 
 # Changes the dodge value of a player
 async def change_player_dodge(ctx, player, value):
     player.dodge += value
-    await ctx.send("**"+player.name+"**"+" has now a dodge value of ***"+str(player.dodge)+"***")
+    await ctx.send("**"+ player.name +"**"+" has now a dodge value of ***"+str(player.dodge)+"***")
 
 # Changes the attack value of a player
 async def change_player_attack(ctx, player, value):
     player.attack += value
-    await ctx.send("**"+player.name+"**"+" has now an attack value of ***"+str(player.attack)+"***")
+    await ctx.send("**"+ player.name +"**"+" has now an attack value of ***"+str(player.attack)+"***")
 
 # Changes the immune value of a player
 async def change_player_immune(ctx, player, value):
-    player.immune += value
-    await ctx.send("**" + player.name + "** is now " + "***"+str(value)+" rounds immune*** 🛡.")
+    player.immune_rounds += value
+    await ctx.send("**" + player.name + "** is now " + "***"+str(value)+" rounds immune*** 🛡")
 
 # Changes the stun value of a player
 async def change_player_stun(ctx, player, value):
-    player.stun += value
-    await ctx.send("**" + player.name + "** is for " + "***"+str(value)+" rounds stunned*** 😴.")
+    player.stun_rounds += value
+    await ctx.send("**" + player.name + "** is for " + "***"+str(value)+" rounds stunned*** 😴")
 
 
 # Changes the stun value of players if they don't have an exception
@@ -65,14 +63,14 @@ async def change_players_stun(ctx, alive_players, value, count, attacker_player=
         for player in alive_players:
             if player == exception:
                 continue
-            player.stun += value
-            await ctx.send("**"+player.name+"**"+" is now ***"+str(value)+" rounds stunned*** 😴")
+            player.stun_rounds += value
+            await ctx.send("**"+ player.name +"**"+" is now ***"+str(value)+" rounds stunned*** 😴")
     else:
         for player in alive_players[:count]:
             if player == exception:
                 continue
-            player.stun += value
-            await ctx.send("**"+player.name+"**"+" is now ***"+str(value)+" rounds stunned*** 😴")
+            player.stun_rounds += value
+            await ctx.send("**"+ player.name +"**"+" is now ***"+str(value)+" rounds stunned*** 😴")
 
 # Changes the dodge value of players.
 #TODO: Add that a certain amount of players instead of just -1 for all.
@@ -82,7 +80,7 @@ async def change_players_dodge(ctx, alive_players, value, count, exception=None)
             if player == exception:
                 continue
             player.dodge += value
-            await ctx.send("**"+player.name+"**"+" has now a dodge value of ***"+str(player.dodge)+"***")
+            await ctx.send("**" + player.name + "**" + " has now a dodge value of ***"+str(player.dodge) + "***")
             
 # Revives dead players.
 #TODO: Add that a certain amount of players get revived. Needs a death list.
@@ -108,7 +106,7 @@ async def math_book(ctx, player, value):
     try:
         answer = await settings.bot.wait_for('message', timeout=settings.math_wait_timer, check=lambda answer: answer.author.name == player.name)
     except asyncio.TimeoutError:
-        await ctx.send("Time is over! Next time practice more!")
+        await ctx.send("Time is over.")
         return
     if result == int(answer.content):
         await ctx.send("Wow, insane math skills! You are getting healed for ***" + str(value) + "***")
@@ -119,14 +117,14 @@ async def math_book(ctx, player, value):
 # This is the standard when no special/event happens
 async def normal_attack(ctx, attacker, defender):
     attack_value = attacker.attack
-    if random.randint(1, 100) <= attacker.critchance:
-        damage = (attack_value - random.randint(1, 5)) * attacker.critmultiplier
+    if random.randint(1, 100) <= attacker.crit_chance:
+        damage = (attack_value - random.randint(1, 5)) * attacker.crit_multiplier
         await ctx.send(random.choice(games.fight.attack_strings.listAttackCrit).format(attacker=attacker.name, defender=defender.name, value=str(int(damage))))
     else:
         damage = attack_value - random.randint(1, 5)
         await ctx.send(random.choice(games.fight.attack_strings.listAttackNoCrit).format(attacker=attacker.name, defender=defender.name, value=str(damage)))
-    if defender.immune > 0:
-        await ctx.send("🛡**" + defender.name + "** is immune 🛡")
+    if defender.immune_rounds > 0:
+        await ctx.send("**" + defender.name + "** is immune 🛡")
         return
     if random.randint(1, 100) <= defender.dodge:
         await ctx.send("**" + defender.name + "**" + " 🤸 dodges the attack!")

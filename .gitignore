@@ -6,7 +6,7 @@ __pycache__/
 # My own exceptions
 .idea/
 .vs/
-settings.py
+/settings.py
 channels.json
 *.sln
 *.pyproj

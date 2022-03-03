@@ -130,6 +130,7 @@ def add_server(servername):
 
 # Posts the statistic of a user
 # You can mention multiple users but need at least one mention
+# TODO: Bring to main file
 @settings.bot.command()
 async def statistic(ctx):
     mentions = ctx.message.mentions

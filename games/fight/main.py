@@ -16,9 +16,9 @@ class Fight:
 
     def init_players(self):
         return_player_list = []
-        for player in self.tmp_fighter_list:
-            player_obj = player.Player(player.name, player.id, player)
-            return_player_list.append(player_obj)
+        for fighter in self.tmp_fighter_list:
+            fighter_obj = player.Player(fighter.name, fighter.id, fighter)
+            return_player_list.append(fighter_obj)
         self.tmp_fighter_list.clear()
         return return_player_list
 
@@ -63,13 +63,13 @@ class Fight:
             while attacker == self.last_attacker:
                 attacker = random.choice(self.alive_players)
             self.last_attacker = attacker
-            await self.ctx.send("It's **" + attacker.name + "'s**" + " turn!")
+            await self.ctx.send("It's **" + attacker.name + "'s**" + " turn")
 
             await asyncio.sleep(settings.default_delay)
 
             # Check if attacker is stunned
             if attacker.stun_rounds > 0:
-                await self.ctx.send("**" + attacker.name + "**" + " is still stunned! 😴")
+                await self.ctx.send("**" + attacker.name + "**" + " is still stunned 😴")
                 await self.end_round()
                 continue
 
@@ -91,7 +91,7 @@ class Fight:
                 defender = random.choice(self.alive_players)
 
             # Attacker and Defender are getting announced in chat
-            await self.ctx.send("**" + attacker.name + "**" + " attacks " + "**" + defender.name + "**!")
+            await self.ctx.send("**" + attacker.name + "**" + " attacks " + "**" + defender.name + "**")
             await asyncio.sleep(settings.default_delay)
 
             # Special
@@ -118,7 +118,7 @@ class Fight:
 
         else:
             winner = self.alive_players[0]
-            await self.ctx.send("🏆 Congratulation! Winner is **" + winner.name + "**! 🏆 ")
+            await self.ctx.send("🏆 Congratulation Winner is **" + winner.name + "** 🏆")
             for player in self.all_players:
                 if player != winner:
                     jsoncontroller.add_lose(self.ctx.guild.name, player)
@@ -128,11 +128,11 @@ class Fight:
         tmp_list = []
         for player in self.alive_players:
             if player.hp < 1:
-                await self.ctx.send("💔**" + player.name + "** was destroyed!💔")
+                await self.ctx.send("💔**" + player.name + "** was destroyed💔")
                 if attacker is None:
                     continue
                 else:
-                    await self.ctx.send("**" + attacker.name + "** has a new kill!")
+                    await self.ctx.send("**" + attacker.name + "** has a new kill")
                     jsoncontroller.add_kill(self.ctx.guild.name, attacker)
                     continue
             else:
@@ -145,4 +145,5 @@ class Fight:
         for player in self.alive_players:
             if player.immune_rounds > 0: player.immune_rounds -= 1
             if player.stun_rounds > 0: player.stun_rounds -= 1
+        await asyncio.sleep(settings.default_delay)
 

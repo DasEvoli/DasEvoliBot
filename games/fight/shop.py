@@ -4,18 +4,75 @@
 
 import asyncio
 import random
-import settings
-import games.fight.function_collection as function_collection
-
-# Global variables are important so we can use lambda functions
-current_player = None
-current_ctx = None
+import games.fight.function_collection as function_collection, settings
 
 async def enter(ctx, player):
-    global current_player
-    global current_ctx
-    current_player = player
-    current_ctx = ctx
+
+    # Collection of items that can be in the store
+    # [0] = Name of item
+    # [1] = How item gets posted
+    # [2] = Value of that item
+    # [3] = Lambda Function
+    # [4] = Emoji to show before the item (Better overview)
+
+    shopItems = [
+        [
+            'Banana',
+            '{symbol}**{name}** (+{value} HP)',
+            20,
+            lambda: function_collection.change_player_hp(ctx, player, 20),
+            "🍌"
+        ],
+        [
+            'Sushi',
+            '{symbol}**{name}** (+{value} dodging)',
+            5,
+            lambda: function_collection.change_player_dodge(ctx, player, 5),
+            "🍣"
+        ],
+        [
+            'Spoon',
+            '{symbol}**{name}** (+{value} normal damage)',
+            5,
+            lambda: function_collection.change_player_attack(ctx, player, 5),
+            "🥄"
+        ],
+        [
+            "Laugh Emoji",
+            '{symbol}**{name}** ({value} HP)',
+            -100,
+            lambda: function_collection.change_player_hp(ctx, player, -100),
+            "🤣"
+        ],
+        [
+            "Shield",
+            '{symbol}**{name}** (+{value} immunity)',
+            2,
+            lambda: function_collection.change_player_immune(ctx, player, 2),
+            "🛡"
+        ],
+        [
+            "Michael Jackson",
+            '{symbol}**{name}** (+{value} normal damage)',
+            6,
+            lambda: function_collection.change_player_attack(ctx, player, 6),
+            "🕴"
+        ],
+        [
+            "Dog",
+            '{symbol}**{name}** (+{value} immunity)',
+            3,
+            lambda: function_collection.change_player_immune(ctx, player, 3),
+            "🐶"
+        ],
+        [
+            "Mathbook",
+            '{symbol}**{name}** (+{value} HP)',
+            50,
+            lambda: function_collection.math_book(ctx, player, 50),
+            "📘"
+        ]
+    ]
 
     # We choose 3 items to show
     # It's not possible that one item is multiple times in the list
@@ -58,70 +115,3 @@ async def enter(ctx, player):
         else:
             await ctx.send(
                 "**" + player.name + "**" + " don't know how numbers work.")
-
-
-# Collection of items that can be in the store
-# [0] = Name of item
-# [1] = How item gets posted
-# [2] = Value of that item
-# [3] = Lambda Function
-# [4] = Emoji to show before the item (Better overview)
-
-shopItems = [
-    [
-        'Banana',
-        '{symbol}**{name}** (+{value} HP)',
-        20,
-        lambda: function_collection.change_player_hp(current_ctx, current_player, 20),
-        "🍌"
-    ],
-    [
-        'Sushi',
-        '{symbol}**{name}** (+{value} dodging)',
-        5,
-        lambda: function_collection.change_player_dodge(current_ctx, current_player, 5),
-        "🍣"
-    ],
-    [
-        'Spoon',
-        '{symbol}**{name}** (+{value} normal damage)',
-        5,
-        lambda: function_collection.change_player_attack(current_ctx, current_player, 5),
-        "🥄"
-    ],
-    [
-        "Laugh Emoji",
-        '{symbol}**{name}** ({value} HP)',
-        -100,
-        lambda: function_collection.change_player_hp(current_ctx, current_player, -100),
-        "🤣"
-    ],
-    [
-        "Shield",
-        '{symbol}**{name}** (+{value} immunity)',
-        2,
-        lambda: function_collection.change_player_immune(current_ctx, current_player, 2),
-        "🛡"
-    ],
-    [
-        "Michael Jackson",
-        '{symbol}**{name}** (+{value} normal damage)',
-        6,
-        lambda: function_collection.change_player_attack(current_ctx, current_player, 6),
-        "🕴"
-    ],
-    [
-        "Dog",
-        '{symbol}**{name}** (+{value} immunity)',
-        3,
-        lambda: function_collection.change_player_immune(current_ctx, current_player, 3),
-        "🐶"
-    ],
-    [
-        "Mathbook",
-        '{symbol}**{name}** (+{value} HP)',
-        50,
-        lambda: function_collection.math_book(current_ctx, current_player, 50),
-        "📘"
-    ]
-]
