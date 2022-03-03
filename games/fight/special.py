@@ -1,11 +1,10 @@
 # Attacker can roll a special while he attacks
-# Image will be posted
-# It can also be a negative special
+# Specials can happen during a fight and is initiated by the attacker with a certain chance
 
 import asyncio
 import random
 import settings
-import games.fight.function_collection as function_collection
+from games.fight import function_collection
 import discord
 
 # Important to make those variables global so we can use lambda functions in a list
@@ -16,7 +15,7 @@ attacker_global = None
 defender_global = None
 
 async def start_special(ctx, attacker, defender, alive_players, all_players):
-    # TODO Change global to CASE
+    # TODO: Change global to CASE??
     global alive_players_global, all_players_global, current_ctx_global, attacker_global, defender_global
     all_players_global = all_players
     alive_players_global = alive_players
@@ -24,24 +23,19 @@ async def start_special(ctx, attacker, defender, alive_players, all_players):
     attacker_global = attacker
     defender_global = defender
 
-    # Random special gets chosen
+    # We announce the event with a string that gets attacker and defender as input
     special = random.choice(listSpecials)
-    # Sends index 0, which is the special message, in chat
     await ctx.send(str(special[0]).format(value=special[2], attacker=attacker_global.name, defender=defender_global.name))
-    # We always also send an image when a special happens. That's important
     await ctx.send(file=discord.File(special[4]))
-    await asyncio.sleep(2)
-    # With that we call the lambda function in a list
-    # We use that so it's much easier and much more customable to make cool events. Literally everything possible
+    await asyncio.sleep(settings.default_delay)
     await special[1]()
-
 
 # [0] = Text of that special that gets posted in chat
 # [1] = Lambda Function that will happen if that event gets chosen
 # [2] = Value of that special
 # [3] = Kind of attack. -1 = affects all players, 0 = affects himself, 1 = affects the defender. This value gets never used. It's only for yourself.
 # [4] = Image of that event
-
+#TODO: Check if it also works without lambda keyword
 listSpecials = [
     [
         "**{attacker}** uses cuddling and squeezes **{defender}** all her/his air out! ***{value} damage*** to **{defender}**!",

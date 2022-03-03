@@ -1,10 +1,10 @@
-# Events can happen during a fight and affect multiple players
-# It gets announced and an image will be posted
+# Events can happen during a fight and affects multiple players.
+# Events are something big with generally a low chance.
 
 import asyncio
 import random
 import settings
-import games.fight.function_collection as function_collection
+from games.fight import function_collection
 import discord
 
 # We need to use global variables because we use Lambda functions
@@ -18,30 +18,27 @@ async def start_event(ctx, all_players, alive_players):
     alive_players_global = alive_players
     current_ctx_global = ctx
 
-    # Events are something big with a low chance. So it gets announced with customizable strings. In those strings 2 random players are getting mentioned 
-    # Can't be one player multiple times
+    # We announce the event with a string that gets 2 random alive players as input
     random_player_one = random.choice(alive_players_global)
     random_player_two = random.choice(alive_players_global)
     while random_player_two == random_player_one:
         random_player_two = random.choice(alive_players_global)
-    random.choice(listEventAnnounce).format(player1=random_player_one.name,
-                                            player2=random_player_two.name)
-    await asyncio.sleep(4)
+    ctx.send(random.choice(listEventAnnounce).format(player1=random_player_one.name, player2=random_player_two.name))
+
+    await asyncio.sleep(settings.event_delay)
+
     event = random.choice(listEvents)
     await ctx.send(str(event[0]).format(value=event[2]))
-    # We always send an image in chat if an event happens
     await ctx.send(file=discord.File(event[4]))
-    await asyncio.sleep(2)
-    # Lambda gets called in list
+    await asyncio.sleep(settings.defaut_delay)
     await event[1]()
-
 
 # [0] = Text that gets posted in chat
 # [1] = Lambda Function
 # [2] = Value
 # [3] = count. How many players will be affected. -1 = all players
 # [4] = Image that gets postet when this event is happening
-
+# TODO: Check if it also works without lambda keyword
 listEvents = [
     [
         "The earth starts to tremble. Is it an earthquake? OH NO, THE **GAMESCOM** JUST OPENED ***{value} damage*** to **EVERYONE**!",
@@ -95,7 +92,6 @@ listEvents = [
     ]
 ]
 
-# Events are something big with a low chance. So it gets announced with customizable strings. In those strings 2 random players are getting mentioned 
 listEventAnnounce = [
     "**{player1}** and **{player2}** are feeling a disturbance in the force...",
     "**{player1}** turns around and feels that something is wrong...",

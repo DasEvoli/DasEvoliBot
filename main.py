@@ -63,16 +63,13 @@ async def fight(ctx):
 
 # Simple command to clear chat in a channel.
 # amount parameter how many messages you want to delete (beginning from last).
+# Amount will be increased by one because sending the command counts as message.
 # -1 as argument will delete every message in that channel limited to 9999.
-# 1 as argument will be turned into 2 because the command itself counts as message
 @settings.bot.command()
 async def clear(ctx, amount: int):
     if amount == -1:
         await ctx.channel.purge(limit=9999)
-        return
-    if amount == 1:
-        await ctx.channel.purge(limit=2)
-    await ctx.channel.purge(limit=amount)
+    await ctx.channel.purge(limit=amount-1)
 
 
 # Command to add the username of a twitch channel to an alert list. 

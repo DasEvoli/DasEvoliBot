@@ -1,7 +1,5 @@
-# Here you can add any kind of string to show when a player attacks another player
-# They are seperated in no crit and crit
-# They get randomly chose and every one has the same chance
-# It's important to use the syntax I used
+# Here you can add any kind of string to show when a player attacks another player.
+# Every string gets randomly chosen.
 
 listAttackNoCrit = [
     "**{attacker}** pushes **{defender}** slightly and does ***{value} damage***!",
