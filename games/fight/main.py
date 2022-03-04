@@ -3,7 +3,6 @@ import asyncio
 from games.fight import jsoncontroller, function_collection, shop, event, special, settings, player
 
 class Fight:
-
     def __init__(self, ctx, fighter_list, all_online):
         self.ctx = ctx
         self.tmp_fighter_list = fighter_list
@@ -115,7 +114,6 @@ class Fight:
             await self.ctx.send("😖**ALL PLAYERS ARE DEAD**😖")
             for player in self.all_players:
                 jsoncontroller.add_lose(self.ctx.guild.name, player)
-
         else:
             winner = self.alive_players[0]
             await self.ctx.send("🏆 Congratulation Winner is **" + winner.name + "** 🏆")

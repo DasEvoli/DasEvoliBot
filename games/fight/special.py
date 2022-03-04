@@ -9,7 +9,6 @@ from games.fight import function_collection, settings
 
 
 async def start_special(ctx, attacker, defender, alive_players, all_players):
-
     # [0] = String that gets sent when this special is happening
     # [1] = Lambda Function that will happen if that event gets chosen
     # [2] = Value of that special

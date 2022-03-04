@@ -8,7 +8,6 @@ import os
 from games.fight import function_collection, settings
 
 async def start_event(ctx, all_players, alive_players):
-
     # [0] = String that gets sent when this event is happening
     # [1] = Lambda Function
     # [2] = Value
@@ -81,8 +80,6 @@ async def start_event(ctx, all_players, alive_players):
     await ctx.send(file=discord.File(event[4]))
     await asyncio.sleep(settings.default_delay)
     await event[1]()
-
-
 
 listEventAnnounce = [
     "**{player1}** and **{player2}** are feeling a disturbance in the force...",
