@@ -13,7 +13,7 @@ async def on_ready():
     for guild in settings.bot.guilds:
         print(guild.name)
 
-    # Start checking for alerts. This function loops in a separate thread.
+    # Start checking for alerts. This function loops in a separate thread
     alert_twitch_obj = alert.twitch.main()
     await alert_twitch_obj.check_alerts()
 
@@ -28,11 +28,11 @@ async def commands(ctx):
     command_string += "`"
     await ctx.send(command_string)
 
-# Starts the fighting game between all players who are mentioned + author.
-# Example: "$fight @user1 @user2".
-# Unlimited amount players possible but more than 10 is not suggested and at least 2 are needed.
-# Important: You can also play with users who are offline but then certain actions will be disabled.
-# The result gets stored in a file that can be printed with a command.
+# Starts the fighting game between all players who are mentioned + author
+# Example: "$fight @user1 @user2"
+# Unlimited amount players possible but more than 10 is not suggested and at least 2 are needed
+# Important: You can also play with users who are offline but then certain actions will be disabled
+# The result gets stored in a file that can be printed with a command
 @settings.bot.command()
 async def fight(ctx):
     print(datetime.datetime.now())
@@ -62,9 +62,9 @@ async def fight(ctx):
     await game_object.start()
 
 # Simple command to clear chat in a channel.
-# amount parameter how many messages you want to delete (beginning from last).
-# Amount will be increased by one because sending the command counts as message.
-# -1 as argument will delete every message in that channel limited to 9999.
+# amount parameter how many messages you want to delete (beginning from last)
+# Amount will be increased by one because sending the command counts as message
+# -1 as argument will delete every message in that channel limited to 9999
 @settings.bot.command()
 async def clear(ctx, amount: int):
     if amount == -1:
@@ -72,7 +72,7 @@ async def clear(ctx, amount: int):
     await ctx.channel.purge(limit=amount-1)
 
 
-# Command to add the username of a twitch channel to an alert list. 
+# Command to add the username of a twitch channel to an alert list
 # Next time the user goes online the channel where you used this command will get a notification
 @settings.bot.command()
 async def twitch_alert(ctx, twitch_name: str):

@@ -1,5 +1,5 @@
-# Here you can add any kind of string to show when a player attacks another player.
-# Every string gets randomly chosen.
+# Here you can add any kind of string to show when a player attacks another player
+# Every string gets randomly chosen
 
 listAttackNoCrit = [
     "**{attacker}** pushes **{defender}** slightly and does ***{value} damage***",

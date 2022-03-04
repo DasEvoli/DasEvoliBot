@@ -25,11 +25,11 @@ class Fight:
     async def start(self):
         await self.ctx.send("Fight starts...")
         self.all_players = self.init_players()
-        self.alive_players = self.all_players
+        self.alive_players = self.all_players[:]
         await self.setup_json()
         await self.fight_looper()
 
-    # We save statistics of games in a json file that gets saved on the server.
+    # We save statistics of games in a json file that gets saved on the server
     async def setup_json(self):
         if not jsoncontroller.statistic_file_exists():
             jsoncontroller.create_statistic_file()

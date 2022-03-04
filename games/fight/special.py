@@ -3,18 +3,18 @@
 
 import asyncio
 import random
-from games.fight import function_collection, settings
 import discord
 import os
+from games.fight import function_collection, settings
+
 
 async def start_special(ctx, attacker, defender, alive_players, all_players):
 
-    # [0] = Text of that special that gets posted in chat
+    # [0] = String that gets sent when this special is happening
     # [1] = Lambda Function that will happen if that event gets chosen
     # [2] = Value of that special
-    # [3] = Kind of attack. -1 = affects all players, 0 = affects himself, 1 = affects the defender. This value gets never used. It's only for yourself.
+    # [3] = Kind of attack. -1 = affects all players, 0 = affects himself, 1 = affects the defender. This value gets never used. It's only for yourself as documentation
     # [4] = Image of that event
-    #TODO: Check if it also works without lambda keyword
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     listSpecials = [
         [

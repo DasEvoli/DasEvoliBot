@@ -8,7 +8,7 @@ import traceback
 import asyncio
 
 class json_handler:
-
+    
     @staticmethod
     def alert_file_exists():
         f = Path('alert/channels.json')
@@ -79,13 +79,12 @@ class json_handler:
             f.close()
 
 class main:
-
     def __init__(self):
         settings.access_token = self.get_access_token()
         if not json_handler.alert_file_exists():
             json_handler.create_alert_file()
             
-    # Twitch API requires now an Access Token for every request.
+    # Twitch API requires now an Access Token for every request
     def get_access_token(self):
         try:
             link = "https://id.twitch.tv/oauth2/token?client_id=" + settings.client_id + "&client_secret=" + settings.client_secret + "&grant_type=client_credentials"
@@ -99,10 +98,10 @@ class main:
             print(e)
             return None
 
-    # This function loops and checks x seconds if any alert should fire. This includes a cooldown.
-    # The cooldown is necessary so the alert doesn't fire if the channel was just offline for a short time.
-    # After the cooldown check comes a check if the channel was checked before and is just still online.
-    # Theoretically we could remove the cooldown but then the Twitch API will be called too often.
+    # This function loops and checks x seconds if any alert should fire. This includes a cooldown
+    # The cooldown is necessary so the alert doesn't fire if the channel was just offline for a short time
+    # After the cooldown check comes a check if the channel was checked before and is just still online
+    # Theoretically we could remove the cooldown but then the Twitch API will be called too often
     async def check_alerts(self):
         while True:
             await asyncio.sleep(settings.twitch_alert_check_delay)
@@ -151,9 +150,6 @@ class main:
             traceback.print_stack()
             return False
 
-    # Posts a message in saved channel (We iterate through every discord_server and channel to find the right one)
-    # Todo: Rewrite how channels are getting checked. Instead of checking every item in every channel, just check the items and then send
-    # all channels which added this item a message.
     async def send_alert(self, channel_ids, twitch_name):
         try:
             for id in channel_ids:

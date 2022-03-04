@@ -8,9 +8,7 @@
 
 import json
 import settings
-# To use file stats
 import os
-# To use is_file()
 from pathlib import Path
 
 def statistic_file_exists():

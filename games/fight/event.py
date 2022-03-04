@@ -1,19 +1,19 @@
-# Events can happen during a fight and affects multiple players.
-# Events are something big with generally a low chance.
+# Events can happen during a fight and affects multiple players
+# Events are something big and should have a low chance in settings.py
 
 import asyncio
 import random
-from games.fight import function_collection, settings
 import discord
 import os
+from games.fight import function_collection, settings
 
 async def start_event(ctx, all_players, alive_players):
 
+    # [0] = String that gets sent when this event is happening
     # [1] = Lambda Function
     # [2] = Value
     # [3] = count. How many players will be affected. -1 = all players
     # [4] = Image that gets postet when this event is happening
-    # TODO: Check if it also works without lambda keyword
     curr_dir = os.path.dirname(os.path.realpath(__file__))
     listEvents = [
         [

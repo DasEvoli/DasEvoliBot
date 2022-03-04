@@ -1,8 +1,7 @@
 from games.fight import settings
 
-# Player object so every player has its own instance for attack damage and other stats
+# Every player has its own instance for attack damage and other stats
 # *_rounds attributes get changed per round
-# TODO: We save the username. Might be better to save the id instead
 class Player:
     def __init__(self, name, userid, user):
         self.name = name
