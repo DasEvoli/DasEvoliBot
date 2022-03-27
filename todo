@@ -9,3 +9,4 @@ Bugs
 
 General
 - Discord Bots are forced to use the new Slash API starting April 2022 which discord.py is not using. Need a rewrite
+- Updating README.md

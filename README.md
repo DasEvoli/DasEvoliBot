@@ -12,19 +12,6 @@ If you want to join this bot to your server follow this link: https://discord.co
 * Fill data in your_settings.py and change "your_settings.py" to "settings.py"
 * Change "your_channels.json" to channels.json
 
-## Bot in action (Now in English!)
-### Fight Module
-#### Attacks with possible dodges/crits
-![](https://imgur.com/a/pwnuzwp)
-#### Specials
-![](https://imgur.com/a/ftoSTxJ)
-
-### Twitch Alert Module
-![](https://i.imgur.com/bEpDfeh.png)
-
-### Love Module
-![](https://imgur.com/a/xHXG3Bw)
-
 ## Authors
 * DasEvoli (Vinzenz Wetzel)
 
