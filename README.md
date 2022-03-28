@@ -13,7 +13,7 @@ If you want to join this bot to your server follow this link: https://discord.co
 * Change "your_channels.json" to channels.json
 
 ## Authors
-* DasEvoli (Vinzenz Wetzel)
+![Image of DasEvoli](https://i.imgur.com/xNcLWUT.png) DasEvoli (Vinzenz Wetzel)
 
 ## License
 This project is licensed under the GNU GENERAL PUBLIC LICENSE Version 3 (GPL3)
