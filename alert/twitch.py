@@ -5,7 +5,7 @@ import settings
 import time
 import traceback
 import asyncio
-from alert.json_handler import json_handler
+from alert.json_handler import twitch as json_handler
 
 
 class main:

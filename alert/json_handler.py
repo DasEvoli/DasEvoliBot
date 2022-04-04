@@ -1,9 +1,8 @@
 import json
 from pathlib import Path as path
 
+class twitch:
 
-class json_handler:
-    
     @staticmethod
     def alert_file_exists():
         f = path('alert/channels.json')
