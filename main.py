@@ -3,6 +3,7 @@ import games.love.main
 import alert.twitch
 import settings
 import datetime
+from alert.json_handler import json_handler
 
 
 @settings.bot.event
@@ -81,16 +82,16 @@ async def twitch_alert(ctx, twitch_name: str):
         return
     twitch_name = twitch_name.lower()
     # If discord server is not in the alert list, we add it
-    if not alert.twitch.json_handler.twitch_name_exists(twitch_name):
-        alert.twitch.json_handler.add_twitch_name(twitch_name)
+    if not json_handler.twitch_name_exists(twitch_name):
+        json_handler.add_twitch_name(twitch_name)
     # If alert already exist we remove it. If alert doesn't exist, we add it
-    if not alert.twitch.json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
-        alert.twitch.json_handler.add_discord_channel_id(ctx.channel.id, twitch_name)
-        if alert.twitch.json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
+    if not json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
+        json_handler.add_discord_channel_id(ctx.channel.id, twitch_name)
+        if json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
             await ctx.send("**{}** was added successfully to the Twitch alert list. As soon as this Twitch channel goes online this discord channel gets a notification.".format(twitch_name))
     else:
-        alert.twitch.json_handler.remove_discord_channel_id(ctx.channel.id, twitch_name)
-        if not alert.twitch.json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
+        json_handler.remove_discord_channel_id(ctx.channel.id, twitch_name)
+        if not json_handler.discord_channel_id_exists(ctx.channel.id, twitch_name):
             await ctx.send("**{}** was removed successfully from the alert list. This discord channel will not get any notifications anymore if this Twitch channel goes online.".format(twitch_name))    
 
 # Little game that prints a random number between 0 - 100 to show love between 2 users    

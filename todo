@@ -8,5 +8,5 @@ Bugs
 - Currently checking if a user is online is bugged from Discord.py
 
 General
-- Discord Bots are forced to use the new Slash API starting April 2022 which discord.py is not using. Need a rewrite
+- Discord Bots are forced to use the new Slash API starting April 2022 which discord.py is not using. Need a rewrite (The developer mentioned that he continues his python api. )
 - Updating README.md

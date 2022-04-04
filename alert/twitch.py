@@ -1,82 +1,12 @@
 import json
 import settings
-from pathlib import Path
 import requests
 import settings
 import time
 import traceback
 import asyncio
+from alert.json_handler import json_handler
 
-class json_handler:
-    
-    @staticmethod
-    def alert_file_exists():
-        f = Path('alert/channels.json')
-        return f.is_file()
-
-    @staticmethod
-    def create_alert_file():
-        with open('alert/channels.json', 'w+') as f:
-            data = {}
-            data['twitch_names'] = {}
-            json_dump = json.dumps(data)
-            f.write(json_dump)
-            f.flush
-            f.close
-
-    @staticmethod
-    def discord_channel_id_exists(discord_channel_id: str, twitch_name: str):
-        with open('alert/channels.json', 'r') as f:
-            data = json.load(f)
-            f.close()
-
-        for id in data['twitch_names'][twitch_name]["channel_ids"]:
-            if id == discord_channel_id:
-                return True
-        return False
-
-    @staticmethod
-    def add_discord_channel_id(discord_channel_id: str, twitch_name: str):
-        with open('alert/channels.json', 'r') as f:
-            data = json.load(f)
-        data['twitch_names'][twitch_name]["channel_ids"].append(discord_channel_id)
-        with open('alert/channels.json', 'w') as f:
-            json.dump(data, f, indent=2)
-            f.close()
-    
-    @staticmethod
-    def remove_discord_channel_id(discord_channel_id: str, twitch_name: str):
-        with open('alert/channels.json', 'r') as f:
-            data = json.load(f)
-        data['twitch_names'][twitch_name]["channel_ids"].remove(discord_channel_id)
-        with open('alert/channels.json', 'w') as f:
-            json.dump(data, f, indent=2)
-            f.close()
-
-    @staticmethod
-    def twitch_name_exists(twitch_name: str):
-        with open('alert/channels.json', 'r') as f:
-            data = json.load(f)
-            f.close()
-        if len(data['twitch_names']) <= 0:
-            return False
-        if twitch_name in data['twitch_names']:
-            return True
-        return False
-
-    @staticmethod
-    def add_twitch_name(twitch_name:str):
-        with open('alert/channels.json', 'r') as f:
-            data = json.load(f)
-        obj = {
-            'last_check': 0,
-            'still_online': False,
-            "channel_ids": []
-        }
-        data['twitch_names'][twitch_name] = obj
-        with open('alert/channels.json', 'w') as f:
-            json.dump(data, f, indent=2)
-            f.close()
 
 class main:
     def __init__(self):
@@ -87,8 +17,8 @@ class main:
     # Twitch API requires now an Access Token for every request
     def get_access_token(self):
         try:
-            link = "https://id.twitch.tv/oauth2/token?client_id=" + settings.client_id + "&client_secret=" + settings.client_secret + "&grant_type=client_credentials"
-            response = requests.post(link)
+            url = "https://id.twitch.tv/oauth2/token?client_id=" + settings.client_id + "&client_secret=" + settings.client_secret + "&grant_type=client_credentials"
+            response = requests.post(url)
             if response.status_code != 200: raise Exception("Couldn't get Access Token. Status Code is not 200.")
             data = json.loads(response.text)
             if not data['access_token']:
@@ -109,7 +39,7 @@ class main:
                 with open('alert/channels.json', 'r') as f:
                     data = json.load(f)
                     f.close()
-                    # items() -> [0] = key, [1] = value
+                # items() -> [0] = key, [1] = value
                 for twitch_name in data['twitch_names'].items():
                     current_time_s = int(round(time.time()))
                     if current_time_s - twitch_name[1]['last_check'] < settings.twitch_alert_cooldown:
@@ -132,10 +62,10 @@ class main:
                 continue
                             
     def live_on_twitch(self, twitch_name:str):
-        link = "https://api.twitch.tv/helix/streams?user_login=" + twitch_name
+        url = "https://api.twitch.tv/helix/streams?user_login=" + twitch_name
         try:
             headers = {'client-id': settings.client_id, 'Authorization': "Bearer " + settings.access_token}
-            response = requests.get(link, headers=headers)
+            response = requests.get(url, headers=headers)
             data = json.loads(response.text)
             if response.status_code == 200:
                 # if Response Data length is larger than 0 it means the user is online
