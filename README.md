@@ -13,17 +13,17 @@ If you want to join this bot to your server follow this link: https://discord.co
 * Change "your_channels.json" to channels.json
 
 ## Todo April
-* Fightbot:
+Fightbot:
 - [ ] Bring back immune even when positive events/specials are happening
 - [ ] Align hp, stuns and immune symbols when posting the players
 - [ ] Add that a certain amount of players get revived instead of always all. Needs a death list
 - [ ] Bring back immune even when positive events/specials are happening
 - [ ] Add that a certain amount of players getting their dodge value changed instead of always all
 
-* Bugs
+Bugs
 - [ ] Currently checking if a user is online is bugged from the Discord.py API
 
-* Other
+Other
 - [ ] Updating README.md
 
 ## Authors
